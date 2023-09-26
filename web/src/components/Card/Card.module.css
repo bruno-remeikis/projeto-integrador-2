@@ -1,0 +1,32 @@
+.card {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   /*gap: 1rem;*/
+
+   background-color: #fafafa;
+   padding: 1rem;
+   /*box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.08);*/
+   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);
+}
+.gradient {
+   animation-duration: 1.8s;
+   animation-fill-mode: forwards;
+   animation-iteration-count: infinite;
+   animation-name: placeHolderShimmer;
+   animation-timing-function: linear;
+   background: #f6f7f8;
+   background: linear-gradient(to right, #fafafa 8%, #eeeeee 38%, #fafafa 54%);
+   background-size: 1000px 640px;
+   
+   position: relative;
+   
+}
+@keyframes placeHolderShimmer{
+   0%{
+       background-position: -468px 0
+   }
+   100%{
+       background-position: 468px 0
+   }
+}

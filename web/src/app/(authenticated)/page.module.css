@@ -1,0 +1,17 @@
+.homepage {
+   padding: 1rem;
+}
+.homepage h2 {
+   text-align: center;
+}
+
+/* TESTE */
+.container {
+   margin-top: 1rem;
+   /*padding: 1rem;
+   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);*/
+}
+.container > :first-child {
+   margin-bottom: 1rem;
+}
+/* FIM DO TESTE */

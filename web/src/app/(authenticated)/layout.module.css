@@ -1,0 +1,67 @@
+.body {
+   --topbar-height: 3.8rem;
+   --bottombar-height: 3.4rem;
+}
+
+/* Barra fixa do topo */
+.mainHeader {
+   position: fixed;
+   top: 0;
+
+   display: flex;
+   align-items: center;
+
+   width: 100vw;
+   height: var(--topbar-height);
+
+   padding: 0 1rem;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.mainHeader .headerIcon {
+   font-size: 2rem;
+}
+.mainHeader .headerTitle {
+   margin-left: 0.4rem;
+   font-size: 1.8rem;
+}
+
+/* Conteúdo principal (children) */
+.mainContainer {
+   margin-top: var(--topbar-height);
+   margin-bottom: var(--bottombar-height);
+}
+
+/* Barra fixa de baixo */
+.mainNavigation {
+   position: fixed;
+   bottom: 0;
+   width: 100vw;
+   height: var(--bottombar-height);
+   border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+.mainNavigation ul {
+   display: flex;
+   flex-direction: row;
+
+   height: 100%;
+
+   list-style: none;
+}
+.mainNavigation ul li {
+   flex: 1;
+}
+.mainNavigation ul li a {
+   height: 100%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   color: black;
+   font-size: 1.5rem;
+   text-decoration: none;
+
+   transition: all 0.08s;
+}
+.mainNavigation ul li a:hover {
+   background-color: rgba(0, 0, 0, 0.1);
+}

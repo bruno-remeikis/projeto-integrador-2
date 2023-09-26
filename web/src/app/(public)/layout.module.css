@@ -1,0 +1,21 @@
+.body {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+
+   min-height: 100vh;
+}
+
+.authContainer {
+   width: 100%;
+   margin: 2rem;
+   padding: 1.4rem;
+   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);
+   text-align: center;
+}
+.authContainer form > :first-child {
+   margin-top: 1rem;
+}
+.authContainer input {
+   padding: 0.6rem;
+}
