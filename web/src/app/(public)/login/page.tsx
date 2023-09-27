@@ -1,11 +1,13 @@
 'use client';
 
 import Link from "next/link";
+import { FormEvent } from "react";
 
 export default function LoginPage()
 {
-	function handleSubmit()
+	function handleSubmit(e: FormEvent<HTMLFormElement>)
 	{
+		e.preventDefault();
 		alert('Submit');
 	}
 
