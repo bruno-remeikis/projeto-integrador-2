@@ -1,0 +1,13 @@
+.formFooter {
+   display: flex;
+   align-items: flex-start;
+   justify-content: space-between;
+}
+.boxForgotPass {
+   display: flex;
+   align-items: flex-start ;
+   font-size: 0.8rem;
+}
+.boxForgotPass a {
+   text-decoration: none;
+}

@@ -13,6 +13,8 @@ export default function PublicLayout({
 		<html lang="pt-BR">
 			<body className={`${inter.className} ${styles.body}`}>
 
+				<h1>UrSport</h1>
+
 				<div className={styles.authContainer}>
 					{children}
 				</div>

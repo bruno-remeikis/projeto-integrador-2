@@ -1,21 +1,59 @@
+
+/* Geral */
+
+.highlightText {
+   color: var(--color-main);
+}
+
+.highlightButton {
+   background-color: var(--color-main);
+   color: white;
+   padding: 0.6rem 2rem;
+   border-radius: 1rem;
+   font-size: 0.95rem;
+}
+
+/* Layout */
+
 .body {
    display: flex;
+   flex-direction: column;
    justify-content: center;
    align-items: center;
 
    min-height: 100vh;
+
+   background-image: linear-gradient(to right bottom, var(--color-main), darkgreen);
+}
+.body h1 {
+   color: white;
+   margin-bottom: 1rem;
 }
 
 .authContainer {
-   width: 100%;
-   margin: 2rem;
-   padding: 1.4rem;
-   box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);
+   width: 25rem;
+   padding: 1.2rem;
+   /*box-shadow: 1px 1px 4px 0 rgba(0, 0, 0, 0.2);*/
    text-align: center;
+
+   background-color: white;
+   border-radius: 1rem;
 }
-.authContainer form > :first-child {
-   margin-top: 1rem;
+.authContainer form > * {
+   margin-top: 0.4rem;
 }
 .authContainer input {
-   padding: 0.6rem;
+   width: 100%;
+   padding: 0.6rem 1rem;
+   background-color: rgba(0, 0, 0, 0.2);
+   border-radius: 1rem;
+}
+.authContainer input:focus {
+   outline: 1px solid var(--color-main);
+}
+
+@media screen and (min-width: 540px) {
+   .authContainer {
+
+   }
 }

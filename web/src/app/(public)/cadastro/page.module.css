@@ -1,0 +1,19 @@
+.passRequirements {
+   margin-left: 1rem;
+}
+.passRequirements li {
+   color: rgba(0, 0, 0, 0.7);
+   font-size: 0.8rem;
+   text-align: left;
+   padding-left: 0ch;
+}
+.passRequirements li::marker {
+   
+}
+
+.validPass {
+   color: green !important;
+}
+.invalidPass {
+   color: red !important;
+}
