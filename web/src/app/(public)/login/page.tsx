@@ -16,20 +16,25 @@ export default function LoginPage()
 	return (
 		<main>
 			<form onSubmit={handleSubmit}>
-				<input type="email" placeholder="Email" />
-				<input type="password" placeholder="Senha" />
-				<div className={styles.formFooter}>
+				<input name="email" type="email" placeholder="Email" autoComplete="email" />
+				<input name="pass" type="password" placeholder="Senha" autoComplete="pass" />
+				<div className={layoutStyles.formFooter}>
+					{/*
 					<div className={styles.boxForgotPass}>
 						<span>Esqueceu sua senha?&#160;</span>
 						<Link href="" className={layoutStyles.highlightText}>Clique aqui</Link>
+					</div>
+					*/}
+					<div className={styles.boxForgotPass}>
+						<Link href="">Esqueci minha senha</Link>
 					</div>
 					<button type="submit" className={layoutStyles.highlightButton}>Entrar</button>
 				</div>
 			</form>
 
-			<div style={{ display: 'flex', marginTop: '1rem' }}>
+			<div className={layoutStyles.mainRedir}>
 				<span>Não possui uma conta?&#160;</span>
-				<Link href="/cadastro" className={layoutStyles.highlightText}>Crie sua conta!</Link>
+				<Link href="/cadastro" className={layoutStyles.highlightText}>Cadastre-se!</Link>
 			</div>
 		</main>
 	)

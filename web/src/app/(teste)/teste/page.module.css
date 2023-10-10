@@ -1,0 +1,90 @@
+.searchContainer {
+
+}
+
+.searchTop {
+   display: flex;
+   align-items: center;
+}
+
+.homeBtn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   background-color: white;
+   width: 2rem;
+   height: 2rem;
+   margin-right: 0.6rem;
+   border-radius: 99rem;
+}
+
+.search {
+   flex: 1;
+   display: flex;
+}
+.search input {
+   flex: 1;
+   padding: 0.6rem 1rem;
+   border-radius: 1rem 0 0 1rem;
+}
+.search button {
+   border-radius: 0 1rem 1rem 0;
+   padding: 0.2rem 0.8rem 0 0.6rem;
+   font-size: 0.9rem;
+}
+
+
+
+/* --- EVENTO --- */
+
+.event {
+   background-color: var(--color-platform);
+   /* padding: 0.6rem; */
+   margin-top: 0.4rem;
+   border-radius: 0.2rem;
+   box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.3);
+   cursor: pointer;
+}
+.eventHeader {
+   background-color: rgba(0, 0, 0, 0.04);
+   padding: 0.6rem;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.eventHeader .name {
+   font-size: 1.2rem;
+}
+.eventHeader .data {
+   font-size: 0.8rem;
+   display: flex;
+   align-items: center;
+}
+.eventHeader .data svg {
+   font-size: 1rem;
+}
+.eventBody {
+   padding: 0.6rem;
+}
+.eventIcons {
+   display: flex;
+   justify-content: space-between;
+
+   /* padding: 0.6rem; */
+   border-top: 1px solid rgba(0, 0, 0, 0.1);
+   
+}
+.iconGroup {
+   display: flex;
+}
+.icon {
+   display: flex;
+   padding: 0.6rem;
+   font-size: 1.1rem;
+   background-color: inherit;
+}
+/* .icon:not(:first-child) {
+   margin-left: 1.4rem;
+} */
+.icon :not(:first-child) {
+   margin-left: 0.2rem;
+}
