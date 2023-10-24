@@ -1,17 +1,35 @@
-.homepage {
+.searchContainer {
    padding: 1rem;
 }
-.homepage h2 {
-   text-align: center;
+
+.searchTop {
+   display: flex;
+   align-items: center;
 }
 
-/* TESTE */
-.container {
-   margin-top: 1rem;
-   /*padding: 1rem;
-   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);*/
+.homeBtn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   background-color: white;
+   width: 2rem;
+   height: 2rem;
+   margin-right: 0.6rem;
+   border-radius: 99rem;
 }
-.container > :first-child {
-   margin-bottom: 1rem;
+
+.search {
+   flex: 1;
+   display: flex;
 }
-/* FIM DO TESTE */
+.search input {
+   flex: 1;
+   padding: 0.6rem 1rem;
+   border-radius: 1rem 0 0 1rem;
+}
+.search button {
+   border-radius: 0 1rem 1rem 0;
+   padding: 0.2rem 0.8rem 0 0.6rem;
+   font-size: 0.9rem;
+}

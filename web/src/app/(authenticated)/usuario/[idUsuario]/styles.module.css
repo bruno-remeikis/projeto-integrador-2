@@ -1,0 +1,117 @@
+.page {
+   --height-barraFixa: 2.8rem;
+   --color-pageHeader-a: var(--color-main-a);
+
+   position: relative;
+}
+
+.fixedTopbar {
+   position: fixed;
+   z-index: 99;
+   right: var(--right-aside-width);
+   left: var(--left-aside-width);
+
+   display: flex;
+   align-items: center;
+
+   background-color: rgba(255, 255, 255, 0.85);
+   /* width: 100%; */
+   height: var(--height-barraFixa);
+}
+.fixedTopbar .backBtn {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   width: 2rem;
+   height: 2rem;
+   margin-left: 0.4rem;
+   border-radius: 99rem;
+}
+.fixedTopbar .backBtn svg {
+   font-size: 1.2rem;
+}
+.fixedTopbar .fixedInfos {
+   margin-left: 0.6rem;
+}
+.fixedTopbar .fixedInfos .fixedNome {
+
+}
+.fixedTopbar .fixedInfos .fixedQtdEventos {
+   font-size: 0.8rem;
+}
+
+.pageHeader {
+   background-color: rgb(var(--color-pageHeader-a));
+   /* color: white; */
+   padding-top: var(--height-barraFixa);
+}
+.pageHeader .fotoCapa {
+   position: relative;
+   background-color: purple;
+   width: 100%;
+   height: 12rem;
+}
+.pageHeader .fotoCapa img {
+   /* height: 100%; */
+   height: 100%;
+   width: 100%;
+}
+.pageHeader .underCapa {
+   --size-foto: 8rem;
+
+   position: relative;
+   z-index: 1;
+
+   display: flex;
+   justify-content: space-between;
+
+   margin-top: calc(var(--size-foto) * -0.5);
+}
+.pageHeader .underCapa .underCapaBtns button {
+   margin: 0 1rem;
+   margin-top: calc(var(--size-foto) / 2 + 1rem);
+   padding: 0.6rem 1rem;
+   border-radius: 99rem;
+}
+.pageHeader .underCapa .foto {
+   display: flex;
+
+   background-color: rgba(255, 255, 255, 0.9);
+   width: var(--size-foto);
+   height: var(--size-foto);
+   margin-left: 1rem;
+   border: 0.34rem solid rgb(var(--color-pageHeader-a));;
+   border-radius: 99rem;
+}
+.pageHeader .underCapa .foto svg {
+   align-self: center;
+   color: var(--color-main);
+   width: 100%;
+   font-size: 4rem;
+   text-align: center;   
+}
+.pageHeader .mainInfos {
+   padding: 0 1rem;
+}
+.pageHeader .mainInfos .topInfos span {
+   font-size: 0.8rem;
+}
+.pageHeader .mainInfos .bio {
+   margin-top: 1rem;
+}
+.pageHeader .mainInfos .conexoesInfo {
+   display: flex;
+   gap: 1rem;
+   margin-top: 1rem;
+}
+.pageHeader .mainInfos .conexoesInfo span {
+   display: initial;
+}
+.pageHeader .mainInfos .conexoesInfo span:first-child {
+   font-weight: bold;
+}
+
+.eventos {
+   padding: 1rem;
+}

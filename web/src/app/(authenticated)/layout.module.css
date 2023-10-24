@@ -1,72 +1,107 @@
 .body {
-   --topbar-height: 3.8rem;
-   --bottombar-height: 3.4rem;
+   display: flex;
+   min-height: 100vh;
+   background-color: var(--color-main);
+   
+   overflow-y: none;
+
+   --left-aside-width: 15rem;
+   --right-aside-width: 26rem;
+   --homemap-height: 20rem;
 }
 
-/* Barra fixa do topo */
-.mainHeader {
+.aside {
    position: fixed;
-   z-index: 99;
-   top: 0;
+   left: 0;
 
    display: flex;
-   align-items: center;
+   flex-direction: column;
 
-   background-color: inherit;
+   /* background-color: rgba(255, 255, 255, 0.25); */
+   width: var(--left-aside-width);
+   min-height: 100vh;
+   padding-top: 1rem;
+   border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+.aside .logo {
+   color: white;
+   font-size: 1.4rem;
+   text-align: center;
+}
+.aside ul.mainMenu {
+   flex: 1;
 
-   width: 100vw;
-   height: var(--topbar-height);
-   padding: 0 1rem;
-   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-.mainHeader .headerIcon {
-   font-size: 2rem;
-}
-.mainHeader .headerTitle {
-   margin-left: 0.4rem;
-   font-size: 1.8rem;
-}
-
-/* Conteúdo principal (children) */
-.mainContainer {
-   margin-top: var(--topbar-height);
-   margin-bottom: var(--bottombar-height);
-}
-
-/* Barra fixa de baixo */
-.mainNavigation {
-   position: fixed;
-   z-index: 99;
-   bottom: 0;
-
-   background-color: inherit;
-   width: 100vw;
-   height: var(--bottombar-height);
-   border-top: 1px solid rgba(0, 0, 0, 0.2);
-}
-.mainNavigation ul {
    display: flex;
-   flex-direction: row;
+   flex-direction: column;
+   gap: 0.8rem;
 
-   height: 100%;
-
+   color: white;
+   margin-left: 1.4rem;
+   margin-top: 1.2rem;
    list-style: none;
 }
-.mainNavigation ul li {
-   flex: 1;
-}
-.mainNavigation ul li a {
-   height: 100%;
+.aside ul.mainMenu li a {
    display: flex;
-   justify-content: center;
    align-items: center;
-
-   color: black;
-   font-size: 1.5rem;
-   text-decoration: none;
-
-   transition: all 0.08s;
+   gap: 0.8rem;
 }
-.mainNavigation ul li a:hover {
-   background-color: rgba(0, 0, 0, 0.1);
+.aside ul.mainMenu li a svg {
+   font-size: 1.8rem;
+}
+.aside ul.mainMenu li a span {
+   font-size: 1.2rem;
+   font-weight: 300;
+}
+
+.main {
+   flex: 1;
+   /* min-height: 100vh; */
+   height: 100vh;
+   
+   margin-left: var(--left-aside-width);
+   margin-right: var(--right-aside-width);
+   overflow-y: scroll; /* ScrollBar */
+}
+
+.eventsAside {
+   position: fixed;
+   right: 0;
+   top: 0;
+   /* background-color: rgba(255, 255, 255, 0.25); */
+   width: var(--right-aside-width);
+   /* min-height: 100vh; */
+   height: 100vh;
+   overflow-y: scroll;
+   /* padding: 1rem; */
+   /* scroll-behavior: smooth; */
+   border-left: 1px solid rgba(0, 0, 0, 0.2);
+}
+.eventsAside::-webkit-scrollbar-track {
+   margin-top: var(--homemap-height);
+}
+.eventsAside .eventsTitle {
+   color: white;
+   text-align: center;
+}
+.eventsAside .noEvents {
+   display: flex;
+   flex-direction: column;
+   background-color: rgba(255, 255, 255, 0.1);
+   padding: 1rem;
+   margin-top: 1rem;
+   box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.4);
+   border-radius: 0.2rem;
+   align-items: center;
+}
+.eventsAside .noEvents .btnNovoEvento {
+   background-color: white;
+   padding: 1rem;
+   margin-top: 0.6rem;
+   border-radius: 99rem;
+}
+
+@media only screen and (max-width: 1100px) {
+   .body {
+      --right-aside-width: 20rem;
+   }
 }

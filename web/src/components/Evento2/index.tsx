@@ -1,19 +1,33 @@
 'use client';
 
-import { FiSearch } from 'react-icons/fi';
-import { AiOutlineHome, AiOutlineEnvironment, AiOutlineHeart, AiFillHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
+import { ReactNode } from "react";
+import { EventoDescricao } from "./EventoDescricao";
 
+// Icons
+import { AiOutlineEnvironment, AiOutlineHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
+// Models
 import IEvento from '@/models/Evento';
-
-import styles from './page.module.css';
-import Link from 'next/link';
+// Next
 import { useRouter } from 'next/navigation';
+// Styles
+import styles from './Evento.module.css';
+import React from 'react';
 
-interface EventoProps extends IEvento {};
+interface EventoProps {
+   children: ReactNode;
+   evento: IEvento;
+}
 
-function Evento({ id, nome, data, descricao, local }: EventoProps)
+export const Evento2 = ({ children, evento }: EventoProps) =>
 {
    const router = useRouter();
+
+   /*
+   const getChildrenOnDisplayName = (children: React.ReactNode, displayName: string) =>
+      React.Children.map(children, (child: any) =>
+         child.type.displayName === displayName ? children : null
+      );
+   */
 
    function teste(e: any)
    {
@@ -30,31 +44,33 @@ function Evento({ id, nome, data, descricao, local }: EventoProps)
 
    function getEventDate(): string
    {
-      return data.toLocaleDateString('pt-BR', {
+      return evento.data.toLocaleDateString('pt-BR', {
          day: 'numeric',
          month: 'long',
-         year: data.getFullYear() === new Date().getFullYear()
+         year: evento.data.getFullYear() === new Date().getFullYear()
             ? undefined : 'numeric',
       });
    }
 
-	return (
+   return (
       <div
          className={styles.event}
          //onClick={() => router.push(`/${id}`)}
       >
          <div className={styles.eventHeader}>
-            <span className={styles.name}>{ nome }</span>
+            <span className={styles.name}>{ evento.nome }</span>
             <div className={styles.data}>
                <span>Em { getEventDate() }</span>
                <span>&nbsp;&bull;&nbsp;</span>
                <AiOutlineEnvironment />
-               <span>{ local }</span>
+               <span>{ evento.local }</span>
             </div>
          </div>
+
          <div className={styles.eventBody}>
-            <span>{ descricao }</span>
+            <span>{ evento.descricao }</span>
          </div>
+
          <div className={styles.eventIcons}>
             <div className={styles.iconGroup}>
                <button type="button" className={styles.icon} onClick={teste} title='Comentários'>
@@ -79,35 +95,7 @@ function Evento({ id, nome, data, descricao, local }: EventoProps)
             </div>
          </div>
       </div>
-	);
-}
-
-export default function Home()
-{
-   return (
-      <div className={styles.searchContainer}>
-         <div className={styles.searchTop}>
-            <Link href="/" className={styles.homeBtn}>
-               <AiOutlineHome />
-            </Link>
-            <div className={styles.search}>
-               <input type="text" />
-               <button type="button">
-                  <FiSearch />
-               </button>
-            </div>
-         </div>
-
-         {[...Array(10)].map((e, i) =>
-            <Evento
-               key={i}
-               nome={`Evento ${i}`}
-               data={new Date()}
-               descricao='Esta é a descrição deste evento. Todos estão convidados!'
-               local='Bola Show - Tabuazeiro, Vitória'
-               esporte='Volei'
-            />
-         )}
-      </div>
    );
 }
+
+Evento2.Descricao = EventoDescricao;
