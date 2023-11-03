@@ -25,10 +25,9 @@ public class UsuarioDAO
 			
 			if(rs.next()) {
 				Usuario u = new Usuario();
-				//u.setId(rs.getInt("ID"));
+				u.setId(/*rs.getInt("ID")*/ 0);
 				u.setNome(rs.getString("NOME"));
 				u.setEmail(rs.getString("EMAIL"));
-				u.setSenha(rs.getString("SENHA"));
 				
 				return u;
 			}
