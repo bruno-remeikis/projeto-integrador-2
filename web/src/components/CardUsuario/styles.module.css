@@ -1,0 +1,11 @@
+.card {
+   display: flex;
+   align-items: center;
+}
+
+.userImage {
+   width: 5rem;
+   height: 5rem;
+   background-color: purple;
+   border-radius: 99rem;
+}

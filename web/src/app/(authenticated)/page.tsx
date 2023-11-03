@@ -9,6 +9,7 @@ import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Evento from '@/components/Evento/Evento';
+import { CardUsuario } from '@/components/CardUsuario';
 
 export default function HomePage()
 {
@@ -26,16 +27,18 @@ export default function HomePage()
             </div>
          </div>
 
-         {[...Array(10)].map((e, i) =>
-            <Evento
-               key={i}
-               nome={`Evento ${i}`}
-               data={new Date()}
-               descricao='Esta é a descrição deste evento. Todos estão convidados!'
-               local='Bola Show - Tabuazeiro, Vitória'
-               esporte='Volei'
-            />
-         )}
+         <div className={styles.results}>
+            {[...new Array(10)].map((e, i) =>
+               <Evento
+                  key={i}
+                  nome={`Evento ${(i + 1)}`}
+                  data={new Date()}
+                  descricao="Esta é a descrição do evento."
+                  local="Bola Show. Tabuazeiro, Vitória"
+                  esporte="Futebol"
+               />
+            )}
+         </div>
       </div>
    );
 }

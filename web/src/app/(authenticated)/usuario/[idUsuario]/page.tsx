@@ -40,8 +40,8 @@ export default function UsuarioPage()
                   src='/capa-futebol-exemplo.jpg'
                   alt='Foto de capa'
                   //width={20} height={20}
-                  //width={0} height={0}
                   fill
+                  objectFit="cover"
                />
             </div>
             <div className={styles.underCapa}>

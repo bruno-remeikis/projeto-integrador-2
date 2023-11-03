@@ -1,7 +1,7 @@
 .body {
    display: flex;
    min-height: 100vh;
-   background-color: var(--color-main);
+   background-color: var(--color-bg);
    
    overflow-y: none;
 
@@ -21,7 +21,7 @@
    width: var(--left-aside-width);
    min-height: 100vh;
    padding-top: 1rem;
-   border-right: 1px solid rgba(0, 0, 0, 0.2);
+   border-right: var(--border-simple);
 }
 .aside .logo {
    color: white;
@@ -60,7 +60,7 @@
    
    margin-left: var(--left-aside-width);
    margin-right: var(--right-aside-width);
-   overflow-y: scroll; /* ScrollBar */
+   overflow-y: scroll;
 }
 
 .eventsAside {
@@ -74,7 +74,7 @@
    overflow-y: scroll;
    /* padding: 1rem; */
    /* scroll-behavior: smooth; */
-   border-left: 1px solid rgba(0, 0, 0, 0.2);
+   border-left: var(--border-simple);
 }
 .eventsAside::-webkit-scrollbar-track {
    margin-top: var(--homemap-height);
@@ -82,6 +82,13 @@
 .eventsAside .eventsTitle {
    color: white;
    text-align: center;
+}
+.eventsAside .eventos {
+   display: flex;
+   flex-direction: column;
+   gap: 0.4rem;
+
+   margin-top: 1rem;
 }
 .eventsAside .noEvents {
    display: flex;

@@ -58,7 +58,7 @@ export default function AuthenticatedLayout({
 					<div>
 						<span>Bruno Remeiki</span>
 						<span>brunocoutinhoremeikis@gmail.com</span>
-						<button type="button">Sair</button>
+						<Link href='/login'>Sair</Link>
 					</div>
 				</aside>
 
@@ -67,25 +67,29 @@ export default function AuthenticatedLayout({
 				</main>
 
 				<div className={styles.eventsAside}>
+					
 					<HomeMap />
+					
 					<div style={{ padding: '0.6rem' }}>
 						<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
 					
 						{/* Seus Eventos */}
 						{eventos.length ? (
 							// Eventos
-							eventos.map((e, i) =>
-								<Evento
-									key={i}
-									nome={`Meu Evento ${i + 1}`} 
-									data={new Date()}
-									descricao="Descrição do meu evento!!!"
-									local="Não sei onde é"
-									esporte="futebol"
+							<div className={styles.eventos}>
+								{eventos.map((e, i) =>
+									<Evento
+										key={i}
+										nome={`Meu Evento ${i + 1}`} 
+										data={new Date()}
+										descricao="Descrição do meu evento!!!"
+										local="Não sei onde é"
+										esporte="futebol"
 
-									displayIcons={false}
-								/>
-							)
+										displayIcons={false}
+									/>
+								)}
+							</div>
 						) : (
 							// Sem eventos
 							<div className={styles.noEvents}>

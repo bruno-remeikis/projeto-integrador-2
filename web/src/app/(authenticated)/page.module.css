@@ -33,3 +33,11 @@
    padding: 0.2rem 0.8rem 0 0.6rem;
    font-size: 0.9rem;
 }
+
+.results {
+   display: flex;
+   flex-direction: column;
+   gap: 0.4rem;
+
+   margin-top: 0.8rem;
+}
