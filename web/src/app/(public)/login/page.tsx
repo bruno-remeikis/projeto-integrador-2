@@ -7,10 +7,12 @@ import layoutStyles from '../layout.module.css';
 import { signIn } from 'next-auth/react';
 import { api } from "@/connection/api";
 import { useRouter } from "next/navigation";
+import { cookies } from 'next/headers';
 
 export default function LoginPage()
 {
 	const router = useRouter();
+	//const cookieStore = cookies();
 
 	const [email, setEmail] = useState<string>('');
 	const [senha, setSenha] = useState<string>('');
@@ -28,6 +30,8 @@ export default function LoginPage()
 		{
 			if(res.status === 200 && res.data) {
 				//localStorage.setItem(localStorages.usuarioLogado, res.data);
+				//cookies().set('user', JSON.stringify(data));
+				localStorage.setItem('user', res.data);
 				router.push('/');
 			}
 			else {

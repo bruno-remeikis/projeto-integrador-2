@@ -8,17 +8,13 @@ import Link from 'next/link';
 import '../globals.css';
 import styles from './layout.module.css';
 // Icons
-import { TfiHome, TfiSearch, TfiDribbble } from "react-icons/tfi";
-import { AiOutlineBook, AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
 import { BsBookmark } from 'react-icons/bs';
 // Components
 import HomeMap from '@/components/HomeMap/HomeMap';
 import Evento from '../../components/Evento/Evento';
-import { useRouter } from 'next/navigation';
-import { localStorages } from '@/utils/storageUtils';
-import { SessionProvider } from 'next-auth/react';
-import { NextAuthProvider } from '../providers';
 import { CriarEventoModal } from '@/components/CriarEventoModal';
+import { Auth } from '@/components/Auth';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -38,79 +34,81 @@ export default function AuthenticatedLayout({
 	//const eventos = [...Array(0)];
 
 	return (
-		<html lang="pt-BR">
-			<body className={`${inter.className} ${styles.body}`}>
+		<Auth>
+			<html lang="pt-BR">
+				<body className={`${inter.className} ${styles.body}`}>
 
-				<CriarEventoModal />
+					<CriarEventoModal />
 
-				<aside className={styles.aside}>
-					<Link href='/' className={styles.logo}>
-						<h1>UrSport</h1>
-					</Link>
+					<aside className={styles.aside}>
+						<Link href='/' className={styles.logo}>
+							<h1>UrSport</h1>
+						</Link>
 
-					<ul className={styles.mainMenu}>
-						<li><Link href='/'>
-							<AiOutlineHome />
-							<span>Página Inicial</span>
-						</Link></li>
+						<ul className={styles.mainMenu}>
+							<li><Link href='/'>
+								<AiOutlineHome />
+								<span>Página Inicial</span>
+							</Link></li>
 
-						<li><Link href='/usuario/1'>
-							<AiOutlineUser />
-							<span>Seu perfil</span>
-						</Link></li>
+							<li><Link href='/usuario/1'>
+								<AiOutlineUser />
+								<span>Seu perfil</span>
+							</Link></li>
 
-						<li><Link href='/'>
-							<BsBookmark />
-							<span>Eventos Salvos</span>
-						</Link></li>
-					</ul>
+							<li><Link href='/'>
+								<BsBookmark />
+								<span>Eventos Salvos</span>
+							</Link></li>
+						</ul>
 
-					<div>
-						<span>Bruno Remeiki</span>
-						<span>brunocoutinhoremeikis@gmail.com</span>
-						<Link type="button" href='/login'>Sair</Link>
+						<div>
+							<span>Bruno Remeiki</span>
+							<span>brunocoutinhoremeikis@gmail.com</span>
+							<Link type="button" href='/login'>Sair</Link>
+						</div>
+					</aside>
+
+					<main className={styles.main}>
+						{ children }
+					</main>
+
+					<div className={styles.eventsAside}>
+						
+						<HomeMap />
+						
+						<div className={styles.proxEventos}>
+							<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
+						
+							{/* Seus Eventos */}
+							{eventos.length ? (
+								// Eventos
+								<div className={styles.eventos}>
+									{eventos.map((e, i) =>
+										<Evento
+											key={i}
+											nome={`Meu Evento ${i + 1}`} 
+											data={new Date()}
+											descricao="Descrição do meu evento!!!"
+											local="Não sei onde é"
+											esporte="futebol"
+
+											displayIcons={false}
+										/>
+									)}
+								</div>
+							) : (
+								// Sem eventos
+								<div className={styles.noEvents}>
+									<span>Você ainda não participa de nenhum evento.</span>
+								</div>
+							)}
+
+							<button type="button" className={styles.btnNovoEvento}>Criar novo evento</button>
+						</div>
 					</div>
-				</aside>
-
-				<main className={styles.main}>
-					{ children }
-				</main>
-
-				<div className={styles.eventsAside}>
-					
-					<HomeMap />
-					
-					<div className={styles.proxEventos}>
-						<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
-					
-						{/* Seus Eventos */}
-						{eventos.length ? (
-							// Eventos
-							<div className={styles.eventos}>
-								{eventos.map((e, i) =>
-									<Evento
-										key={i}
-										nome={`Meu Evento ${i + 1}`} 
-										data={new Date()}
-										descricao="Descrição do meu evento!!!"
-										local="Não sei onde é"
-										esporte="futebol"
-
-										displayIcons={false}
-									/>
-								)}
-							</div>
-						) : (
-							// Sem eventos
-							<div className={styles.noEvents}>
-								<span>Você ainda não participa de nenhum evento.</span>
-							</div>
-						)}
-
-						<button type="button" className={styles.btnNovoEvento}>Criar novo evento</button>
-					</div>
-				</div>
-			</body>
-		</html>
+				</body>
+			</html>
+		</Auth>
 	);
 }
