@@ -1,4 +1,4 @@
-'use client';
+//'use client';
 
 import { FiSearch } from 'react-icons/fi';
 import { AiOutlineHome, AiOutlineEnvironment, AiOutlineHeart, AiFillHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
@@ -10,11 +10,22 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Evento from '@/components/Evento/Evento';
 import { CardUsuario } from '@/components/CardUsuario';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../api/auth/[...nextauth]/route';
 
-export default function HomePage()
+export default async function HomePage()
 {
+   const session = await getServerSession(authOptions);
+
    return (
       <div className={styles.searchContainer}>
+         {session
+            ? <span>Usuário logado!!! {JSON.stringify(session)}</span>
+            : <span>Não logado</span>
+         }
+
+         <Link href='/api/auth/signin'>Entrar</Link>
+
          <div className={styles.searchTop}>
             <Link href="/" className={styles.homeBtn}>
                <AiOutlineHome />
