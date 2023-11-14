@@ -1,30 +1,52 @@
 'use client';
 
 import Link from "next/link";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import styles from './page.module.css';
 import layoutStyles from '../layout.module.css';
+import { signIn } from 'next-auth/react';
+import { api } from "@/connection/api";
+import { useRouter } from "next/navigation";
 
 export default function LoginPage()
 {
-	function handleSubmit(e: FormEvent<HTMLFormElement>)
+	const router = useRouter();
+
+	const [email, setEmail] = useState<string>('');
+	const [senha, setSenha] = useState<string>('');
+
+	async function handleSubmit(e: FormEvent<HTMLFormElement>)
 	{
 		e.preventDefault();
-		alert('Submit');
+
+		const data = {
+			email,
+			senha
+		};
+
+		api.get('/usuario', { params: data }).then(res =>
+		{
+			if(res.status === 200 && res.data) {
+				//localStorage.setItem(localStorages.usuarioLogado, res.data);
+				router.push('/');
+			}
+			else {
+				alert('Email ou senha inválidos.');
+			}
+		})
+		.catch(err =>
+		{
+			console.error(err);
+			alert('Erro ao fazer login.');
+		});
 	}
 
 	return (
 		<main>
 			<form onSubmit={handleSubmit}>
-				<input name="email" type="email" placeholder="Email" autoComplete="email" />
-				<input name="pass" type="password" placeholder="Senha" autoComplete="pass" />
+				<input name="email" type="email" placeholder="Email" autoComplete="email" value={email} onChange={e => setEmail(e.target.value)} />
+				<input name="pass" type="password" placeholder="Senha" autoComplete="pass" value={senha} onChange={e => setSenha(e.target.value)} />
 				<div className={layoutStyles.formFooter}>
-					{/*
-					<div className={styles.boxForgotPass}>
-						<span>Esqueceu sua senha?&#160;</span>
-						<Link href="" className={layoutStyles.highlightText}>Clique aqui</Link>
-					</div>
-					*/}
 					<div className={styles.boxForgotPass}>
 						<Link href="">Esqueci minha senha</Link>
 					</div>

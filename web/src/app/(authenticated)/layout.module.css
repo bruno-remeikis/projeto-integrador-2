@@ -79,7 +79,15 @@
 .eventsAside::-webkit-scrollbar-track {
    margin-top: var(--homemap-height);
 }
-.eventsAside .eventsTitle {
+.eventsAside .proxEventos {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   padding: 0.6rem;
+   padding-top: 1rem;
+}
+.eventsAside .proxEventos .eventsTitle {
    color: white;
    text-align: center;
 }
@@ -91,16 +99,18 @@
    margin-top: 1rem;
 }
 .eventsAside .noEvents {
-   display: flex;
+   /*display: flex;
    flex-direction: column;
    background-color: rgba(255, 255, 255, 0.1);
    padding: 1rem;
    margin-top: 1rem;
    box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.4);
    border-radius: 0.2rem;
-   align-items: center;
+   align-items: center;*/
+   color: rgba(255, 255, 255, 0.8);
+   margin-top: 3rem;
 }
-.eventsAside .noEvents .btnNovoEvento {
+.btnNovoEvento {
    background-color: white;
    padding: 1rem;
    margin-top: 0.6rem;

@@ -1,10 +1,11 @@
 'use client';
 
 import Link from "next/link";
-import { ChangeEvent, ChangeEventHandler, FormEvent, useEffect, useState } from "react";
+import { FormEvent, useState } from "react";
 import styles from './page.module.css';
 import layoutStyles from '../layout.module.css';
-import { Metadata } from "next";
+import { api } from "@/connection/api";
+import { useRouter } from "next/navigation";
 
 /*interface PassCheckStyles {
    minCaracters: string;
@@ -17,34 +18,69 @@ const specialPassChars = '!@#$%&*-_+.~:?';
 
 export default function LoginPage()
 {
-   const [pass, setPass] = useState<string>('');
+	const router = useRouter();
 
-   const teste = pass.length > 0 ? {
-      minCaracters: pass.length >= 8 ? styles.validPass : '',
-      letters: /[a-z]/.test(pass) && /[A-Z]/.test(pass) ? styles.validPass : '',
-      numbers: /[0-9]/.test(pass) ? styles.validPass : '',
-      simbols: /[!@#$%&]/.test(pass) ? styles.validPass : '',
-   } : undefined;
+	const [nome, setNome] = useState<string>('');
+	const [email, setEmail] = useState<string>('');
+   const [senha, setSenha] = useState<string>('');
+	const [confSenha, setConfSenha] = useState<string>('');
+
+	const verifSenha: Record<string, boolean> = {
+		minLength: senha.length >= 8,
+      letters: /[a-z]/.test(senha) && /[A-Z]/.test(senha),
+      numbers: /[0-9]/.test(senha),
+      simbols: /[!@#$%&]/.test(senha),
+		onlyValidChars: /[a-zA-Z0-9!@#$%&]/.test(senha), // ! Ver como faz isso
+	};
+
+	const getPassReqStyle = (a: boolean): string =>
+		a ? styles.validPass : '';
 
 	function handleSubmit(e: FormEvent<HTMLFormElement>)
 	{
 		e.preventDefault();
-		alert('Submit');
+		
+		console.log(verifSenha);
+		for(let key in verifSenha)
+			if(!verifSenha[key]) {
+				alert('Senha invalida');
+				return;
+			}
+
+		if(senha !== confSenha) {
+			alert('Senhas não conferem');
+			return;
+		}
+
+		const data = {
+			nome, email, senha
+		};
+
+		api.post('/usuario', data).then(res =>
+		{
+			if(res.data)
+				router.push('/login');
+		})
+		.catch(err =>
+		{
+			alert('Erro ao cadastrar');
+			console.error(err);
+		});
 	}
 
 	return (
 		<main>
 			<form onSubmit={handleSubmit}>
-            <input name="name" type="text" placeholder="Nome" autoComplete="name" />
-				<input name="email" type="email" placeholder="Email" autoComplete="email" />
-				<input name="pass" type="password" placeholder="Senha" autoComplete="pass" value={pass} onChange={e => setPass(e.target.value)} />
+            <input name="name" type="text" placeholder="Nome" autoComplete="name" required value={nome} onChange={e => setNome(e.target.value)} />
+				<input name="email" type="email" placeholder="Email" autoComplete="email" required value={email} onChange={e => setEmail(e.target.value)} />
+				<input name="pass" type="password" placeholder="Senha" autoComplete="senha" required value={senha} onChange={e => setSenha(e.target.value)} />
             <ul className={styles.passRequirements}>
-               <li className={teste?.minCaracters}>8 caracteres</li>
-               <li className={teste?.letters}>Letras maiúsculas e minúsculas</li>
-               <li className={teste?.numbers}>1 número</li>
-               <li className={teste?.simbols}>1 símbolo especial</li>
+               <li className={getPassReqStyle(verifSenha.minLength)}>8 caracteres</li>
+               <li className={getPassReqStyle(verifSenha.letters)}>Letras maiúsculas e minúsculas</li>
+               <li className={getPassReqStyle(verifSenha.numbers)}>1 número</li>
+               <li className={getPassReqStyle(verifSenha.simbols && verifSenha.onlyValidChars)}>1 símbolo especial</li>
             </ul>
-            <input name="conf-pass" type="password" placeholder="Confirme sua senha" />
+            <input name="conf-senha" type="password" placeholder="Confirme sua senha" required value={confSenha} onChange={e => setConfSenha(e.target.value)} />
 				<div className={layoutStyles.formFooter}>
 					<button type="submit" className={layoutStyles.highlightButton}>Criar conta</button>
 				</div>

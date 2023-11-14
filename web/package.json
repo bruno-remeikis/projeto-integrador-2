@@ -10,10 +10,13 @@
   },
   "dependencies": {
     "@react-google-maps/api": "^2.19.2",
+    "axios": "^1.6.0",
     "next": "latest",
+    "next-auth": "^4.24.4",
     "react": "latest",
     "react-dom": "latest",
-    "react-icons": "^4.11.0"
+    "react-icons": "^4.11.0",
+    "react-responsive-modal": "^6.4.2"
   },
   "devDependencies": {
     "@types/node": "latest",

@@ -1,3 +1,5 @@
+'use client';
+
 // Next
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
@@ -12,26 +14,34 @@ import { BsBookmark } from 'react-icons/bs';
 // Components
 import HomeMap from '@/components/HomeMap/HomeMap';
 import Evento from '../../components/Evento/Evento';
+import { useRouter } from 'next/navigation';
+import { localStorages } from '@/utils/storageUtils';
+import { SessionProvider } from 'next-auth/react';
+import { NextAuthProvider } from '../providers';
+import { CriarEventoModal } from '@/components/CriarEventoModal';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
 
-export const metadata: Metadata = {
+/*export const metadata: Metadata = {
   title: 'UrSport',
   description: 'Sua Rede Social Esportiva.',
-};
+};*/
 
 export default function AuthenticatedLayout({
-	children,
+	children
 }: {
 	children: React.ReactNode
-}) {
+})
+{
 	const eventos = [...Array(30)];
 	//const eventos = [...Array(0)];
 
 	return (
 		<html lang="pt-BR">
 			<body className={`${inter.className} ${styles.body}`}>
+
+				<CriarEventoModal />
 
 				<aside className={styles.aside}>
 					<Link href='/' className={styles.logo}>
@@ -58,7 +68,7 @@ export default function AuthenticatedLayout({
 					<div>
 						<span>Bruno Remeiki</span>
 						<span>brunocoutinhoremeikis@gmail.com</span>
-						<Link href='/login'>Sair</Link>
+						<Link type="button" href='/login'>Sair</Link>
 					</div>
 				</aside>
 
@@ -70,7 +80,7 @@ export default function AuthenticatedLayout({
 					
 					<HomeMap />
 					
-					<div style={{ padding: '0.6rem' }}>
+					<div className={styles.proxEventos}>
 						<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
 					
 						{/* Seus Eventos */}
@@ -94,9 +104,10 @@ export default function AuthenticatedLayout({
 							// Sem eventos
 							<div className={styles.noEvents}>
 								<span>Você ainda não participa de nenhum evento.</span>
-								<button type="button" className={styles.btnNovoEvento}>Criar novo evento</button>
 							</div>
 						)}
+
+						<button type="button" className={styles.btnNovoEvento}>Criar novo evento</button>
 					</div>
 				</div>
 			</body>
