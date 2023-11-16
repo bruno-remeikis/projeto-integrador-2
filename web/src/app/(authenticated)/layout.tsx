@@ -17,6 +17,7 @@ import { CriarEventoModal } from '@/components/CriarEventoModal';
 import { Auth } from '@/components/Auth';
 import { Modal } from '@/components/Modal';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -32,10 +33,17 @@ export default function AuthenticatedLayout({
 	children: React.ReactNode
 })
 {
+	const router = useRouter();
+
 	//const eventos = [...Array(30)];
 	const eventos = [...Array(0)];
 
 	const [novoEventoModalVisible, setNovoEventoModalVisible] = useState<boolean>(false);
+
+	function handleLogout() {
+		localStorage.removeItem('user');
+		router.push('/login');
+	}
 
 	return (
 		<Auth>
@@ -72,7 +80,7 @@ export default function AuthenticatedLayout({
 						<div>
 							<span>Bruno Remeiki</span>
 							<span>brunocoutinhoremeikis@gmail.com</span>
-							<Link type="button" href='/login'>Sair</Link>
+							<button type="button" onClick={handleLogout}>Sair</button>
 						</div>
 					</aside>
 

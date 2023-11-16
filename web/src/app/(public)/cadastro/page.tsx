@@ -40,7 +40,6 @@ export default function LoginPage()
 	{
 		e.preventDefault();
 		
-		console.log(verifSenha);
 		for(let key in verifSenha)
 			if(!verifSenha[key]) {
 				alert('Senha invalida');

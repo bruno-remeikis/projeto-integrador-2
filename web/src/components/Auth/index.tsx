@@ -9,28 +9,22 @@ type AuthProps = {
 
 export const Auth = ({ children }: AuthProps) =>
 {
-   //const router = useRouter();
+   const router = useRouter();
 
-   const [authorized, setAuthorized] = useState<boolean>(true);
-
-   useEffect(() =>
+   const authorized: boolean = (() =>
    {
-      console.log('Teste');
-   }, []);
+      const user =
+         typeof window !== 'undefined' &&
+         !!localStorage.getItem('user');
 
-   /*useEffect(() =>
-   {
-      console.log('AAA');
-
-      if(localStorage.getItem('user'))
-         setAuthorized(true);
-      else
+      if(!user)
          router.push('/login');
-   }, []);*/
 
-   return (
-      <>
-         {authorized && children}
-      </>
-   );
+      return user;
+   })();
+
+   return <>
+      { authorized && children }
+   </>
+
 }

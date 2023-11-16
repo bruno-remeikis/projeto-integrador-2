@@ -31,7 +31,6 @@ export default function LoginPage()
 			if(res.status === 200 && res.data) {
 				//localStorage.setItem(localStorages.usuarioLogado, res.data);
 				//cookies().set('user', JSON.stringify(data));
-				console.log(res);
 				localStorage.setItem('user', JSON.stringify(res.data));
 				router.push('/');
 			}

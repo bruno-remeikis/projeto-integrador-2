@@ -21,8 +21,6 @@ type EventoProps = {
 // Evento
 const Evento = ({ evento, displayIcons }: EventoProps) =>
 {
-   console.log(evento);
-
    const id = evento.id ? evento.id : 0;
    const { nome, nomeEsporte, descricao, local, dtEvento } = evento;
 
@@ -34,7 +32,10 @@ const Evento = ({ evento, displayIcons }: EventoProps) =>
          onClick={() => router.push(`/evento/${id}`)}
       >
          <div className={styles.eventHeader}>
-            <span className={styles.name}>{ nome }</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+               <span className={styles.name}>{ nome }</span>
+               <span style={{ fontSize: '0.7rem' }}>{ nomeEsporte }</span>
+            </div>
             <div className={styles.data}>
                <span>Em { formatDate(dtEvento) }</span>
                <span>&nbsp;&bull;&nbsp;</span>

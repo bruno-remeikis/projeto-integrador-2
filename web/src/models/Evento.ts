@@ -8,6 +8,6 @@ export type TEvento =
    descricao: string;
    local: string;
 
-   nomeUsuario: string;
-   nomeEsporte: string;
+   nomeUsuario?: string;
+   nomeEsporte?: string;
 }

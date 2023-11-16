@@ -1,10 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import { Modal, ModalProps } from '../Modal';
 import styles from './CriarEventoModal.module.css';
 import { api } from '@/services/api';
 import { TEvento } from '@/models/Evento';
+import { TEsporte } from '@/models/Esporte';
 //import Modal from 'react-modal';
 
 type CriarEventoModalProps = Omit<ModalProps, 'children'> & {
@@ -13,15 +14,34 @@ type CriarEventoModalProps = Omit<ModalProps, 'children'> & {
 
 export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =>
 {
-   const [esportes, setEsportes] = useState<any[]>([]);
+   const [esportes, setEsportes] = useState<TEsporte[]>([]);
+   const [nome, setNome] = useState<string>('');
+   const [idEsporte, setIdEsporte] = useState<number>(0);
+   const [local, setLocal] = useState<string>('');
+   const [dtEvento, setDtEvento] = useState<string>('');
+   const [descricao, setDescricao] = useState<string>('');
 
-   function handleSubmit(e: any)
+   function handleSubmit(e: FormEvent<HTMLFormElement>)
    {
       e.preventDefault();
 
-      const data/*: TEvento*/ = {
-
+      if(!nome || idEsporte <= 0 || !local || !dtEvento || !descricao) {
+         alert('Preencha todos os campos!');
+         return;
       }
+
+      const user = JSON.parse(localStorage.getItem('user')!);
+
+      const data: TEvento = {
+         nome,
+         idUsuarioCriador: user.id,
+         idEsporte,
+         local,
+         dtEvento: new Date(dtEvento),
+         descricao
+      }
+      
+      console.log(data);
 
       api.post('/evento', data).then(res =>
       {
@@ -31,10 +51,8 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
 
    useEffect(() =>
    {
-      setEsportes([
-         { id: 1, nome: 'Futebol' },
-         { id: 2, nome: 'Volei' }
-      ]);
+      api.get('/esporte')
+         .then(res => setEsportes(res.data));
    }, []);
 
    return(
@@ -49,11 +67,12 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
             <div className="inline-form-group">
                <div style={{ flexGrow: 1 }}>
                   <label htmlFor="nome">Nome</label>
-                  <input id="nome" type="text" />
+                  <input id="nome" type="text" value={nome} onChange={e => setNome(e.target.value)} />
                </div>
                <div>
                   <label htmlFor="esporte">Esporte</label>
-                  <select id="esporte">
+                  <select id="esporte" value={idEsporte} onChange={e => setIdEsporte(+ e.target.value)}>
+                     <option disabled value={0}></option>
                      {esportes.map(esporte =>
                         <option key={esporte.id} value={esporte.id}>{ esporte.nome }</option>
                      )}
@@ -63,16 +82,16 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
             <div className="inline-form-group">
                <div style={{ flexGrow: 1 }}>
                   <label htmlFor="local">Local</label>
-                  <input id="local" type="text" />
+                  <input id="local" type="text" value={local} onChange={e => setLocal(e.target.value)} />
                </div>
                <div>
                   <label htmlFor="data">Data</label>
-                  <input id="data" type="datetime-local" />
+                  <input id="data" type="datetime-local" value={dtEvento} onChange={e => setDtEvento(e.target.value)} />
                </div>
             </div>
             <div>
                <label htmlFor="descricao">Descrição</label>
-               <textarea id="descricao" rows={4} maxLength={255} />
+               <textarea id="descricao" rows={4} maxLength={255} value={descricao} onChange={e => setDescricao(e.target.value)} />
             </div>
 
             <div className={styles.control}>
