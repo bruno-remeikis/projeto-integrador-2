@@ -23,9 +23,9 @@ public class UsuarioDAO
 			
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next()) {
+			while(rs.next()) {
 				Usuario u = new Usuario();
-				u.setId(/*rs.getInt("ID")*/ 0);
+				u.setId(rs.getInt("ID"));
 				u.setNome(rs.getString("NOME"));
 				u.setEmail(rs.getString("EMAIL"));
 				
@@ -39,8 +39,8 @@ public class UsuarioDAO
 	public boolean insert(Usuario u) throws Exception
 	{
 		String query =
-			"INSERT INTO USUARIO (NOME, EMAIL, SENHA) " +
-			"VALUES (?, ?, ?)";
+			"INSERT INTO USUARIO (ID, NOME, EMAIL, SENHA) " +
+			"VALUES (ID_USUARIO_SEQ.NEXTVAL, ?, ?, ?)";
 		
 		try(
 			Connection con = OracleConnector.getConnection();
