@@ -5,54 +5,28 @@
 // Icons
 import { AiOutlineEnvironment, AiOutlineHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
 // Models
-import IEvento from '@/models/Evento';
+import { TEvento } from '@/models/Evento';
 // Next
 import { useRouter } from 'next/navigation';
 // Styles
 import styles from './Evento.module.css';
 import React from 'react';
+import { formatDate } from '@/utils/DateUtil';
 
-// interface EventoProps {
-//    evento: IEvento;
-// }
-interface EventoProps extends IEvento {
+type EventoProps = {
+   evento: TEvento;
    displayIcons?: boolean;
 }
 
 // Evento
-const Evento = ({ id, nome, data, descricao, local, displayIcons }: EventoProps) =>
+const Evento = ({ evento, displayIcons }: EventoProps) =>
 {
+   console.log(evento);
+
+   const id = evento.id ? evento.id : 0;
+   const { nome, nomeEsporte, descricao, local, dtEvento } = evento;
+
    const router = useRouter();
-
-   /*
-   const getChildrenOnDisplayName = (children: React.ReactNode, displayName: string) =>
-      React.Children.map(children, (child: any) =>
-         child.type.displayName === displayName ? children : null
-      );
-   */
-
-   function teste(e: any)
-   {
-      e?.preventDefault();
-
-      const dt = new Date().toLocaleDateString('pt-BR', {
-         day: 'numeric',
-         month: 'long',
-         year: undefined //'numeric',
-      });
-   
-      alert(dt);
-   }
-
-   function getEventDate(): string
-   {
-      return data.toLocaleDateString('pt-BR', {
-         day: 'numeric',
-         month: 'long',
-         year: data.getFullYear() === new Date().getFullYear()
-            ? undefined : 'numeric',
-      });
-   }
 
 	return (
       <div
@@ -62,7 +36,7 @@ const Evento = ({ id, nome, data, descricao, local, displayIcons }: EventoProps)
          <div className={styles.eventHeader}>
             <span className={styles.name}>{ nome }</span>
             <div className={styles.data}>
-               <span>Em { getEventDate() }</span>
+               <span>Em { formatDate(dtEvento) }</span>
                <span>&nbsp;&bull;&nbsp;</span>
                <AiOutlineEnvironment />
                <span>{ local }</span>
@@ -76,7 +50,7 @@ const Evento = ({ id, nome, data, descricao, local, displayIcons }: EventoProps)
          {(displayIcons === undefined || displayIcons === true) &&
          <div className={styles.eventIcons}>
             <div className={styles.iconGroup}>
-               <button type="button" className={styles.icon} onClick={teste} title='Comentários'>
+               <button type="button" className={styles.icon} title='Comentários'>
                   <AiOutlineMessage />
                   <span>3</span>
                </button>

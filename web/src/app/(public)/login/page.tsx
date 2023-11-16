@@ -5,7 +5,7 @@ import { FormEvent, useState } from "react";
 import styles from './page.module.css';
 import layoutStyles from '../layout.module.css';
 import { signIn } from 'next-auth/react';
-import { api } from "@/connection/api";
+import { api } from "@/services/api";
 import { useRouter } from "next/navigation";
 import { cookies } from 'next/headers';
 
@@ -31,7 +31,8 @@ export default function LoginPage()
 			if(res.status === 200 && res.data) {
 				//localStorage.setItem(localStorages.usuarioLogado, res.data);
 				//cookies().set('user', JSON.stringify(data));
-				localStorage.setItem('user', res.data);
+				console.log(res);
+				localStorage.setItem('user', JSON.stringify(res.data));
 				router.push('/');
 			}
 			else {

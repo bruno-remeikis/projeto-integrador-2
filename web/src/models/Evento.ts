@@ -1,9 +1,13 @@
-export default interface Evento
+export type TEvento =
 {
    id?: number;
    nome: string;
-   data: Date;
+   idUsuarioCriador: number;
+   idEsporte: number;
+   dtEvento: Date;
    descricao: string;
    local: string;
-   esporte: string;
+
+   nomeUsuario: string;
+   nomeEsporte: string;
 }

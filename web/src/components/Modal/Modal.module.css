@@ -1,0 +1,51 @@
+.overlay {
+   position: absolute;
+   z-index: 999;
+   top: 0;
+   bottom: 0;
+   left: 0;
+   right: 0;
+
+   overflow-y: auto;
+
+   /*display: flex;
+   align-items: center;
+   justify-content: center;*/
+
+   background-color: rgba(0, 0, 0, 0.6);
+}
+.containerColumn {
+   max-height: 100vh;
+   margin: auto;
+}
+.container {
+   position: relative;
+
+   background-color: white;
+   margin: 1rem 0;
+   padding: 2rem;
+   border-radius: 0.4rem;
+}
+.header {
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+}
+.header .title {
+   position: absolute;
+   left: 0;
+   right: 0;
+
+   margin-top: 0.4rem;
+   font-size: 1.2rem;
+   text-align: center;
+}
+.header .control {
+   position: absolute;
+   top: 0.4rem;
+   right: 0.4rem;
+}
+.header .control button {
+   font-size: 1.2rem;
+}

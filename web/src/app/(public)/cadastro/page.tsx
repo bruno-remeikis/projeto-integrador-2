@@ -4,7 +4,7 @@ import Link from "next/link";
 import { FormEvent, useState } from "react";
 import styles from './page.module.css';
 import layoutStyles from '../layout.module.css';
-import { api } from "@/connection/api";
+import { api } from "@/services/api";
 import { useRouter } from "next/navigation";
 
 /*interface PassCheckStyles {

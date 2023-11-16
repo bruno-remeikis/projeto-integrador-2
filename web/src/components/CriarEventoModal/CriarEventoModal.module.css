@@ -1,0 +1,9 @@
+.control {
+   display: flex;
+   flex-direction: row-reverse;
+   
+   margin-top: 1rem;
+}
+.control > * {
+   margin-left: 0.2rem;
+}

@@ -3,16 +3,26 @@
 import { FiSearch } from 'react-icons/fi';
 import { AiOutlineHome, AiOutlineEnvironment, AiOutlineHeart, AiFillHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
 
-import IEvento from '@/models/Evento';
+import { TEvento } from '@/models/Evento';
 
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Evento from '@/components/Evento/Evento';
 import { CardUsuario } from '@/components/CardUsuario';
+import { api } from '@/services/api';
+import { useEffect, useState } from 'react';
 
 export default function HomePage()
 {
+   const [eventos, setEventos] = useState<TEvento[]>([]);
+   
+   useEffect(() => {
+      //console.log(localStorage.getItem('user'));
+      const user = JSON.parse(localStorage.getItem('user')!);
+      api.get(`/evento/feed/${user.id}`).then(res => setEventos(res.data));
+   }, []);
+
    return (
       <div className={styles.searchContainer}>
          <div className={styles.searchTop}>
@@ -28,14 +38,10 @@ export default function HomePage()
          </div>
 
          <div className={styles.results}>
-            {[...new Array(10)].map((e, i) =>
+            {eventos.map((e, i) =>
                <Evento
-                  key={i}
-                  nome={`Evento ${(i + 1)}`}
-                  data={new Date()}
-                  descricao="Esta é a descrição do evento."
-                  local="Bola Show. Tabuazeiro, Vitória"
-                  esporte="Futebol"
+                  key={e.id}
+                  evento={e}
                />
             )}
          </div>

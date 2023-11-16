@@ -1,4 +1,4 @@
-export default interface Usuario
+export type TUsuario =
 {
    id?: number;
    nome: string;

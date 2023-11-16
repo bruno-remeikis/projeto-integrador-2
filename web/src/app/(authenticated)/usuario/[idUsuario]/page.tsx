@@ -20,7 +20,8 @@ export default function UsuarioPage()
       bio: 'Esta é a biografia deste usuário.'
    };
 
-   const eventos = [...Array(30)];
+   //const eventos = [...Array(30)];
+   const eventos = [...Array(0)];
 
    return (
       <div className={styles.page}>
@@ -80,11 +81,7 @@ export default function UsuarioPage()
                eventos.map((e, i) =>
                   <Evento
                      key={i}
-                     nome={`Meu Evento ${i + 1}`} 
-                     data={new Date()}
-                     descricao="Descrição do meu evento!!!"
-                     local="Não sei onde é"
-                     esporte="futebol"
+                     evento={e}
                   />
                )
             ) : (

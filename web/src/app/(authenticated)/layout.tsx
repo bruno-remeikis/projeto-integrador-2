@@ -15,6 +15,8 @@ import HomeMap from '@/components/HomeMap/HomeMap';
 import Evento from '../../components/Evento/Evento';
 import { CriarEventoModal } from '@/components/CriarEventoModal';
 import { Auth } from '@/components/Auth';
+import { Modal } from '@/components/Modal';
+import { useState } from 'react';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -30,15 +32,20 @@ export default function AuthenticatedLayout({
 	children: React.ReactNode
 })
 {
-	const eventos = [...Array(30)];
-	//const eventos = [...Array(0)];
+	//const eventos = [...Array(30)];
+	const eventos = [...Array(0)];
+
+	const [novoEventoModalVisible, setNovoEventoModalVisible] = useState<boolean>(false);
 
 	return (
 		<Auth>
 			<html lang="pt-BR">
 				<body className={`${inter.className} ${styles.body}`}>
 
-					<CriarEventoModal />
+					<CriarEventoModal
+						isOpen={novoEventoModalVisible}
+						setIsOpen={setNovoEventoModalVisible}
+					/>
 
 					<aside className={styles.aside}>
 						<Link href='/' className={styles.logo}>
@@ -87,12 +94,7 @@ export default function AuthenticatedLayout({
 									{eventos.map((e, i) =>
 										<Evento
 											key={i}
-											nome={`Meu Evento ${i + 1}`} 
-											data={new Date()}
-											descricao="Descrição do meu evento!!!"
-											local="Não sei onde é"
-											esporte="futebol"
-
+											evento={e}
 											displayIcons={false}
 										/>
 									)}
@@ -104,7 +106,10 @@ export default function AuthenticatedLayout({
 								</div>
 							)}
 
-							<button type="button" className={styles.btnNovoEvento}>Criar novo evento</button>
+							<button type="button"
+								className={styles.btnNovoEvento}
+								onClick={() => setNovoEventoModalVisible(true)}
+							>Criar novo evento</button>
 						</div>
 					</div>
 				</body>
