@@ -6,6 +6,7 @@ import styles from './CriarEventoModal.module.css';
 import { api } from '@/services/api';
 import { TEvento } from '@/models/Evento';
 import { TEsporte } from '@/models/Esporte';
+import { user } from '@/services/UserService';
 //import Modal from 'react-modal';
 
 type CriarEventoModalProps = Omit<ModalProps, 'children'> & {
@@ -30,11 +31,9 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
          return;
       }
 
-      const user = JSON.parse(localStorage.getItem('user')!);
-
       const data: TEvento = {
          nome,
-         idUsuarioCriador: user.id,
+         idUsuarioCriador: user.id!,
          idEsporte,
          local,
          dtEvento: new Date(dtEvento),

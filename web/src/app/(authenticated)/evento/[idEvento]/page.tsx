@@ -1,8 +1,10 @@
 'use client';
 
 import { TEvento } from "@/models/Evento";
+import { user } from "@/services/UserService";
 import { api } from "@/services/api";
 import { formatDate } from "@/utils/DateUtil";
+import { AxiosRequestConfig } from "axios";
 import { useParams } from "next/navigation"
 import { useEffect, useState } from "react";
 
@@ -14,7 +16,9 @@ export default function EventoPage()
 
    useEffect(() =>
    {
-      api.get(`/evento/${params.idEvento}`).then(res =>
+      const config: AxiosRequestConfig = { headers: { 'user': user.id } };
+
+      api.get(`/evento/${params.idEvento}`, config).then(res =>
       {
          setEvento(res.data);
       });

@@ -52,6 +52,31 @@
    font-size: 1.2rem;
    font-weight: 300;
 }
+.aside .personalData {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+
+   color: white;
+   padding: 0.6rem;
+   border-top: var(--border-simple);
+}
+.aside .personalData span {
+   text-wrap: wrap;
+}
+.aside .personalData button {
+   /* background-color: white; */
+   background-color: transparent;
+   /* color: rgba(0, 0, 0, 0.8); */
+   color: white;
+   padding: 0.4rem 0.6rem;
+   margin-left: 0.6rem;
+   /* border: 1px solid rgba(255, 255, 255, 0.8); */
+   border-radius: 99rem;
+}
+.aside .personalData button svg {
+   font-size: 1.2rem;
+}
 
 .main {
    flex: 1;
@@ -99,16 +124,13 @@
    margin-top: 1rem;
 }
 .eventsAside .noEvents {
-   /*display: flex;
-   flex-direction: column;
-   background-color: rgba(255, 255, 255, 0.1);
-   padding: 1rem;
-   margin-top: 1rem;
-   box-shadow: 0px 1px 4px 0 rgba(0, 0, 0, 0.4);
-   border-radius: 0.2rem;
-   align-items: center;*/
+   display: flex;
+   justify-content: center;
+
    color: rgba(255, 255, 255, 0.8);
    margin-top: 3rem;
+   text-align: center;
+   text-wrap: balance;
 }
 .btnNovoEvento {
    background-color: white;

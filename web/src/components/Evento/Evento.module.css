@@ -21,6 +21,10 @@
    background-color: rgba(0, 0, 0, 0.04);
    padding: 0.6rem;
 }
+.eventHeader .topInfo {
+   display: flex;
+   justify-content: space-between;
+}
 .eventHeader .name {
    font-size: 1.2rem;
 }
@@ -37,6 +41,7 @@
 }
 .eventIcons {
    display: flex;
+   align-items: center;
    justify-content: space-between;
 
    /* padding: 0.6rem; */
@@ -46,6 +51,7 @@
 }
 .icon {
    display: flex;
+   /* align-items: center; */
    padding: 0.6rem;
    font-size: 1.1rem;
    background-color: inherit;
@@ -55,4 +61,28 @@
 } */
 .icon :not(:first-child) {
    margin-left: 0.2rem;
+}
+
+.marcarPresenca {
+   display: flex;
+   gap: 0.2rem;
+   flex-direction: row-reverse;
+   align-items: flex-end;
+
+   padding: 0.6rem 0.8rem;
+   border-left: var(--border-simple);
+}
+.marcarPresenca svg {
+   font-size: 1.1rem;
+}
+.marcarPresenca span {
+   font-size: 0.9rem;
+}
+.marcarPresenca.presente {
+   color: rgba(0, 0, 0, 0.6);
+   background-color: transparent;
+}
+.marcarPresenca.ausente {
+   color: green;
+   background-color: rgba(0, 255, 0, 0.4);
 }

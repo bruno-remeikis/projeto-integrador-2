@@ -14,6 +14,7 @@ export default function HomeMap()
 		googleMapsApiKey: "AIzaSyAVh-TTYKVbkx3jn8McRqTCo4NNAkvxyRs"
 	});
 
+   const [mapError, setMapError] = useState<string | undefined>();
 	const [center, setCenter] = useState<Coord | undefined>();
 	const [marker, setMarker] = useState<Coord | undefined>();
 
@@ -31,9 +32,9 @@ export default function HomeMap()
 					lng: position.coords.longitude
 				});*/
 			},
-			() => alert('Não conseguimos descobrir sua localização.'));
+			() => setMapError('Não conseguimos descobrir sua localização.'));
 		else
-			alert('Geolocalização não suportada.');
+         setMapError('Geolocalização não suportada.');
 	},
 	[]);
 
@@ -61,8 +62,10 @@ export default function HomeMap()
                <Marker position={marker} />}
             </GoogleMap>
          ): (
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-               <span>Carregando mapa</span>
+            <div className={styles.noMapMessage}>
+               {mapError
+                  ? <span>{ mapError }</span>
+                  : <span>Carregando mapa...</span>}
             </div>
          )}
       </div>

@@ -6,22 +6,26 @@ import styles from './styles.module.css';
 import { FiArrowLeft, FiUser } from "react-icons/fi";
 import { TfiUser } from 'react-icons/tfi';
 import Image from "next/image";
-import Evento from "@/components/Evento/Evento";
+import Evento from "@/components/Evento";
+import { TUsuario } from "@/models/Usuario";
+import { api } from "@/services/api";
+import { useEffect, useState } from "react";
 
 export default function UsuarioPage()
 {
    const router = useRouter();
    const params = useParams();
 
-   const usuario = {
-      id: params.idUsuario,
-      nome: 'Bruno Remeikis',
-      email: 'brunocoutinhoremeikis@gmail.com',
-      bio: 'Esta é a biografia deste usuário.'
-   };
+   const [usuario, setUsuario] = useState<TUsuario>();
 
    //const eventos = [...Array(30)];
    const eventos = [...Array(0)];
+
+   useEffect(() =>
+   {
+      api.get(`/usuario/${params.idUsuario}`)
+         .then(res => setUsuario(res.data));
+   }, []);
 
    return (
       <div className={styles.page}>
@@ -30,7 +34,7 @@ export default function UsuarioPage()
                <FiArrowLeft />
             </button>
             <div className={styles.fixedInfos}>
-               <span className={styles.fixedNome}>{ usuario.nome }</span>
+               <span className={styles.fixedNome}>{ usuario?.nome }</span>
                <span className={styles.fixedQtdEventos}>14 eventos</span>
             </div>
          </div>
@@ -55,11 +59,11 @@ export default function UsuarioPage()
             </div>
             <div className={styles.mainInfos}>
                <div className={styles.topInfos}>
-                  <h2>{ usuario.nome }</h2>
-                  <span>{ usuario.email }</span>
+                  <h2>{ usuario?.nome }</h2>
+                  <span>{ usuario?.email }</span>
                </div>
                <div className={styles.bio}>
-                  <span>{ usuario.bio }</span>
+                  <span>{ usuario?.bio }</span>
                </div>
                <div className={styles.conexoesInfo}>
                   <div>

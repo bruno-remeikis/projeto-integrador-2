@@ -1,4 +1,16 @@
 .mapContainer {
    height: calc(var(--homemap-height) / 1.25);
+   background-color: rgb(233, 226, 207);
    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.noMapMessage {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100%;
+}
+.noMapMessage span {
+   text-align: center;
+   text-wrap: balance;
 }

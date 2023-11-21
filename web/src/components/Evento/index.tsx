@@ -3,28 +3,42 @@
 'use client';
 
 // Icons
-import { AiOutlineEnvironment, AiOutlineHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineEnvironment, AiOutlineHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
 // Models
 import { TEvento } from '@/models/Evento';
 // Next
 import { useRouter } from 'next/navigation';
 // Styles
 import styles from './Evento.module.css';
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { formatDate } from '@/utils/DateUtil';
+import { api } from '@/services/api';
+import { user } from '@/services/UserService';
 
 type EventoProps = {
    evento: TEvento;
+   displayDescricao?: boolean;
    displayIcons?: boolean;
 }
 
 // Evento
-const Evento = ({ evento, displayIcons }: EventoProps) =>
+const Evento = ({ evento, displayDescricao, displayIcons }: EventoProps) =>
 {
    const id = evento.id ? evento.id : 0;
-   const { nome, nomeEsporte, descricao, local, dtEvento } = evento;
+   const { nome, nomeEsporte, nomeUsuario, descricao, local, dtEvento, qtdPresencas, presente } = evento;
 
    const router = useRouter();
+
+   function handleMarcarPresenca(e: SyntheticEvent)
+   {
+      e.stopPropagation(); // <- Impede que redireciona à pagina do evento ao clicar
+
+      api.post(`/presencaEvento?idUsuario=${user.id}&idEvento=${id}`, null).then(res =>
+      {
+         console.log(res);
+         router.refresh();
+      });
+   }
 
 	return (
       <div
@@ -32,9 +46,12 @@ const Evento = ({ evento, displayIcons }: EventoProps) =>
          onClick={() => router.push(`/evento/${id}`)}
       >
          <div className={styles.eventHeader}>
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-               <span className={styles.name}>{ nome }</span>
+            <div className={styles.topInfo}>
+               <span style={{ fontSize: '0.6rem' }}>Por { nomeUsuario }</span>
                <span style={{ fontSize: '0.7rem' }}>{ nomeEsporte }</span>
+            </div>
+            <div>
+               <span className={styles.name}>{ nome }</span>
             </div>
             <div className={styles.data}>
                <span>Em { formatDate(dtEvento) }</span>
@@ -44,13 +61,14 @@ const Evento = ({ evento, displayIcons }: EventoProps) =>
             </div>
          </div>
 
+         {(displayDescricao === undefined || displayDescricao) &&
          <div className={styles.eventBody}>
             <span>{ descricao }</span>
-         </div>
+         </div>}
 
-         {(displayIcons === undefined || displayIcons === true) &&
+         {(displayIcons === undefined || displayIcons) &&
          <div className={styles.eventIcons}>
-            <div className={styles.iconGroup}>
+            {/*<div className={styles.iconGroup}>
                <button type="button" className={styles.icon} title='Comentários'>
                   <AiOutlineMessage />
                   <span>3</span>
@@ -70,6 +88,25 @@ const Evento = ({ evento, displayIcons }: EventoProps) =>
                <button type="button" className={styles.icon} title='Salvar'>
                   <AiOutlineStar />
                </button>
+            </div>*/}
+            <div className={styles.iconGroup}>
+               <div className={styles.icon} title='Participantes'>
+                  <AiOutlineUser />
+                  <span>{ qtdPresencas }</span> 
+               </div>
+            </div>
+            <div className={styles.iconGroup}>
+               <div //type="button"
+                  className={`
+                     ${styles.marcarPresenca}
+                     ${presente ? styles.presente : styles.ausente}
+                  `}
+                  //title='Marcar presença'
+                  onClick={handleMarcarPresenca}
+               >
+                  <AiOutlineCarryOut />
+                  <span>{ presente ? 'Participando' : 'Participar' }</span>
+               </div>
             </div>
          </div>}
       </div>

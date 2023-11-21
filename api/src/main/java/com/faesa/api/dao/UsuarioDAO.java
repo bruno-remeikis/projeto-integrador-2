@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import com.faesa.api.connection.OracleConnector;
 import com.faesa.api.model.Usuario;
 
-public class UsuarioDAO
+public class UsuarioDAO extends DAO
 {
 	public Usuario selectLogin(String email, String senha) throws Exception
 	{
@@ -23,7 +23,7 @@ public class UsuarioDAO
 			
 			ResultSet rs = ps.executeQuery();
 			
-			while(rs.next()) {
+			if(rs.next()) {
 				Usuario u = new Usuario();
 				u.setId(rs.getInt("ID"));
 				u.setNome(rs.getString("NOME"));
@@ -51,6 +51,33 @@ public class UsuarioDAO
 			ps.setString(3, u.getSenha());
 			
 			return ps.executeUpdate() == 1;
+		}
+	}
+	
+	public Usuario select(int id) throws Exception
+	{
+		String query =
+			"SELECT * FROM USUARIO WHERE ID = ?";
+		
+		try(
+			Connection con = OracleConnector.getConnection();
+			PreparedStatement ps = con.prepareStatement(query);
+		){
+			ps.setInt(1, id);
+			
+			ResultSet rs = ps.executeQuery();
+			
+			if(rs.next()) {
+				Usuario u = new Usuario();
+				u.setId(rs.getInt("ID"));
+				u.setNome(rs.getString("NOME"));
+				u.setEmail(rs.getString("EMAIL"));
+				u.setBio(rs.getString("BIO"));
+				u.setDtInsert(this.getDate(rs, "DT_INSERT"));
+				return u;
+			}
+			
+			return null;
 		}
 	}
 }

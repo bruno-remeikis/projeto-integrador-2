@@ -18,4 +18,9 @@ public class UsuarioService
 	{
 		return new UsuarioDAO().insert(u);
 	}
+	
+	public Usuario find(int id) throws Exception
+	{
+		return new UsuarioDAO().select(id);
+	}
 }

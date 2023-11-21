@@ -20,4 +20,6 @@ public class Evento
 	
 	private String nomeUsuario;
 	private String nomeEsporte;
+	private Integer qtdPresencas;
+	private Boolean presente;
 }

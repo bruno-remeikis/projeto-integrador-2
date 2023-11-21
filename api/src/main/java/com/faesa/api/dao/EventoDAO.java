@@ -27,6 +27,8 @@ public class EventoDAO extends DAO
 		
 		e.setNomeUsuario(rs.getString("NOME_USUARIO"));
 		e.setNomeEsporte(rs.getString("NOME_ESPORTE"));
+		e.setQtdPresencas(rs.getInt("QTD_PRESENCAS"));
+		e.setPresente(rs.getInt("PRESENTE") > 0);
 		
 		return e;
 	}
@@ -52,13 +54,21 @@ public class EventoDAO extends DAO
 		}
 	}
 	
-	public Evento selectById(int id) throws Exception
+	public Evento selectById(int id, int idUsuarioSession) throws Exception
 	{
 		String query =
 			"SELECT " +
 			"	 EVENTO.* " +
 			"	,USUARIO.NOME AS NOME_USUARIO " +
 			"	,ESPORTE.NOME AS NOME_ESPORTE " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS QTD_PRESENCAS " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_USUARIO = ? AND SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS PRESENTE " +
 			"FROM EVENTO " +
 			"INNER JOIN USUARIO ON " +
 			"	USUARIO.ID = EVENTO.ID_USUARIO_CRIADOR " +
@@ -70,7 +80,8 @@ public class EventoDAO extends DAO
 			Connection con = OracleConnector.getConnection();
 			PreparedStatement ps = con.prepareStatement(query)
 		){
-			ps.setInt(1, id);
+			ps.setInt(1, idUsuarioSession);
+			ps.setInt(2, id);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -81,13 +92,21 @@ public class EventoDAO extends DAO
 		}
 	}
 	
-	public List<Evento> selectByIdUsuario(int idUsuario) throws Exception
+	public List<Evento> selectByIdUsuario(int idUsuario, int idUsuarioSession) throws Exception
 	{
 		String query =
 			"SELECT " +
 			"	 EVENTO.* " +
 			"	,USUARIO.NOME AS NOME_USUARIO " +
 			"	,ESPORTE.NOME AS NOME_ESPORTE " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS QTD_PRESENCAS " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_USUARIO = ? AND SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS PRESENTE " +
 			"FROM EVENTO " +
 			"INNER JOIN USUARIO ON " +
 			"	USUARIO.ID = EVENTO.ID_USUARIO_CRIADOR " +
@@ -99,7 +118,8 @@ public class EventoDAO extends DAO
 			Connection con = OracleConnector.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
 		){
-			ps.setInt(1, idUsuario);
+			ps.setInt(1, idUsuarioSession);
+			ps.setInt(2, idUsuario);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -113,28 +133,37 @@ public class EventoDAO extends DAO
 		}
 	}
 	
-	public List<Evento> selectByIdUsuarioParticipacao(int idUsuario) throws Exception
+	public List<Evento> selectByIdUsuarioParticipacao(int idUsuario, int idUsuarioSession) throws Exception
 	{
 		String query =
 			"SELECT " +
 			"	 EVENTO.* " +
 			"	,USUARIO.NOME AS NOME_USUARIO " +
 			"	,ESPORTE.NOME AS NOME_ESPORTE " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS QTD_PRESENCAS " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_USUARIO = ? AND SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS PRESENTE " +
 			"FROM EVENTO " +
 			"INNER JOIN USUARIO ON " +
 			"	USUARIO.ID = EVENTO.ID_USUARIO_CRIADOR " +
 			"INNER JOIN ESPORTE ON " +
 			"	ESPORTE.ID = EVENTO.ID_ESPORTE " +
 			"INNER JOIN PRESENCA_EVENTO ON " +
-			"	PRESENCA_EVENTO.ID_USUARIO_CRIADOR = EVENTO.ID_USUARIO_CRIADOR AND " +
+			"	PRESENCA_EVENTO.ID_USUARIO = EVENTO.ID_USUARIO_CRIADOR AND " +
 			"	PRESENCA_EVENTO.ID_EVENTO = EVENTO.ID " +
-			"WHERE EVENTO.ID_USUARIO_CRIADOR = ?";
+			"WHERE PRESENCA_EVENTO.ID_USUARIO = ?";
 			
 		try(
 			Connection con = OracleConnector.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
 		){
-			ps.setInt(1, idUsuario);
+			ps.setInt(1, idUsuarioSession);
+			ps.setInt(2, idUsuario);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -155,6 +184,14 @@ public class EventoDAO extends DAO
 			"	 EVENTO.* " +
 			"	,USUARIO.NOME AS NOME_USUARIO " +
 			"	,ESPORTE.NOME AS NOME_ESPORTE " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_USUARIO = 1 AND SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS QTD_PRESENCAS " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM PRESENCA_EVENTO SUB_PE " +
+			"		WHERE SUB_PE.ID_USUARIO = ? AND SUB_PE.ID_EVENTO = EVENTO.ID" +
+			"	) AS PRESENTE " +
 			"FROM EVENTO " +
 			"INNER JOIN USUARIO ON " +
 			"	USUARIO.ID = EVENTO.ID_USUARIO_CRIADOR " +
@@ -173,6 +210,7 @@ public class EventoDAO extends DAO
 			PreparedStatement ps = con.prepareStatement(query);
 		){
 			ps.setInt(1, idUsuario);
+			ps.setInt(2, idUsuario);
 			
 			ResultSet rs = ps.executeQuery();
 			

@@ -9,15 +9,20 @@ import '../globals.css';
 import styles from './layout.module.css';
 // Icons
 import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
-import { BsBookmark } from 'react-icons/bs';
+import { BsBookmark, BsDoorOpen } from 'react-icons/bs';
 // Components
 import HomeMap from '@/components/HomeMap/HomeMap';
-import Evento from '../../components/Evento/Evento';
+import Evento from '../../components/Evento';
 import { CriarEventoModal } from '@/components/CriarEventoModal';
 import { Auth } from '@/components/Auth';
 import { Modal } from '@/components/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { TUsuario } from '@/models/Usuario';
+import { TEvento } from '@/models/Evento';
+import { api } from '@/services/api';
+import { AxiosRequestConfig } from 'axios';
+import { user } from '@/services/UserService';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -35,15 +40,21 @@ export default function AuthenticatedLayout({
 {
 	const router = useRouter();
 
-	//const eventos = [...Array(30)];
-	const eventos = [...Array(0)];
-
 	const [novoEventoModalVisible, setNovoEventoModalVisible] = useState<boolean>(false);
+	const [meusEventos, setMeusEventos] = useState<TEvento[]>([]);
 
 	function handleLogout() {
 		localStorage.removeItem('user');
 		router.push('/login');
 	}
+
+	useEffect(() =>
+	{
+		const config: AxiosRequestConfig = { headers: { 'user': user.id } };
+
+		api.get(`/evento/eventosParticipacaoUsuario/${user.id}`, config)
+			.then(res => setMeusEventos(res.data));
+	}, []);
 
 	return (
 		<Auth>
@@ -66,7 +77,7 @@ export default function AuthenticatedLayout({
 								<span>Página Inicial</span>
 							</Link></li>
 
-							<li><Link href='/usuario/1'>
+							<li><Link href={`/usuario/${user.id}`}>
 								<AiOutlineUser />
 								<span>Seu perfil</span>
 							</Link></li>
@@ -77,10 +88,11 @@ export default function AuthenticatedLayout({
 							</Link></li>
 						</ul>
 
-						<div>
-							<span>Bruno Remeiki</span>
-							<span>brunocoutinhoremeikis@gmail.com</span>
-							<button type="button" onClick={handleLogout}>Sair</button>
+						<div className={styles.personalData}>
+							<span>{ user.nome }</span>
+							<button type="button" onClick={handleLogout} title="Sair">
+								<BsDoorOpen />
+							</button>
 						</div>
 					</aside>
 
@@ -96,14 +108,15 @@ export default function AuthenticatedLayout({
 							<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
 						
 							{/* Seus Eventos */}
-							{eventos.length ? (
+							{meusEventos.length ? (
 								// Eventos
 								<div className={styles.eventos}>
-									{eventos.map((e, i) =>
+									{meusEventos.map((e, i) =>
 										<Evento
 											key={i}
 											evento={e}
-											displayIcons={false}
+											displayDescricao={false}
+											//displayIcons={false}
 										/>
 									)}
 								</div>

@@ -10,4 +10,6 @@ export type TEvento =
 
    nomeUsuario?: string;
    nomeEsporte?: string;
+   qtdPresencas?: number;
+   presente?: boolean;
 }

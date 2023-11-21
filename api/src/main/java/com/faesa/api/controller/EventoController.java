@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -44,18 +45,16 @@ public class EventoController
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Evento> get(
-		@PathVariable int id
+		@PathVariable int id,
+		@RequestHeader("user") int idUsuarioSession
 	) {
 		try {
-			Evento e = eventoService.findById(id);
+			Evento e = eventoService.findById(id, idUsuarioSession);
 			
 			if(e == null)
-				return new ResponseEntity("null", HttpStatus.OK);
+				return ResponseEntity.notFound().build();
 			
-			return new ResponseEntity<Evento>(
-				e,
-				HttpStatus.OK
-			);
+			return new ResponseEntity<Evento>(e, HttpStatus.OK);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
@@ -65,11 +64,12 @@ public class EventoController
 	
 	@GetMapping("/eventosUsuario/{idUsuario}")
 	public ResponseEntity<List<Evento>> getEventosUsuario(
-		@PathVariable int idUsuario
+		@PathVariable int idUsuario,
+		@RequestHeader("user") int idUsuarioSession
 	) {
 		try {
 			return ResponseEntity.ok(
-				eventoService.findByIdUsuario(idUsuario)
+				eventoService.findByIdUsuario(idUsuario, idUsuarioSession)
 			);
 		}
 		catch(Exception e) {
@@ -80,11 +80,12 @@ public class EventoController
 	
 	@GetMapping("/eventosParticipacaoUsuario/{idUsuario}")
 	public ResponseEntity<List<Evento>> getEventosParticipacaoUsuario(
-		@PathVariable int idUsuario
+		@PathVariable int idUsuario,
+		@RequestHeader("user") int idUsuarioSession
 	) {
 		try {
 			return ResponseEntity.ok(
-				eventoService.findByIdUsuarioParticipacao(idUsuario)
+				eventoService.findByIdUsuarioParticipacao(idUsuario, idUsuarioSession)
 			);
 		}
 		catch(Exception e) {

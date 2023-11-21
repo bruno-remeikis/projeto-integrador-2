@@ -8,10 +8,11 @@ import { TEvento } from '@/models/Evento';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Evento from '@/components/Evento/Evento';
+import Evento from '@/components/Evento';
 import { CardUsuario } from '@/components/CardUsuario';
 import { api } from '@/services/api';
 import { useEffect, useState } from 'react';
+import { user } from '@/services/UserService';
 
 export default function HomePage()
 {
@@ -19,7 +20,6 @@ export default function HomePage()
    
    useEffect(() => {
       //console.log(localStorage.getItem('user'));
-      const user = JSON.parse(localStorage.getItem('user')!);
       api.get(`/evento/feed/${user.id}`).then(res => setEventos(res.data));
    }, []);
 

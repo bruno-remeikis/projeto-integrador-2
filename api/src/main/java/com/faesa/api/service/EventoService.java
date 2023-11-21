@@ -15,19 +15,19 @@ public class EventoService
 		new EventoDAO().insert(e);
 	}
 	
-	public Evento findById(int id) throws Exception
+	public Evento findById(int id, int idUsuarioSession) throws Exception
 	{
-		return new EventoDAO().selectById(id);
+		return new EventoDAO().selectById(id, idUsuarioSession);
 	}
 	
-	public List<Evento> findByIdUsuario(int idUsuario) throws Exception
+	public List<Evento> findByIdUsuario(int idUsuario, int idUsuarioSession) throws Exception
 	{
-		return new EventoDAO().selectByIdUsuario(idUsuario);
+		return new EventoDAO().selectByIdUsuario(idUsuario, idUsuarioSession);
 	}
 	
-	public List<Evento> findByIdUsuarioParticipacao(int idUsuario) throws Exception
+	public List<Evento> findByIdUsuarioParticipacao(int idUsuario, int idUsuarioSession) throws Exception
 	{
-		return new EventoDAO().selectByIdUsuarioParticipacao(idUsuario);
+		return new EventoDAO().selectByIdUsuarioParticipacao(idUsuario, idUsuarioSession);
 	}
 	
 	public List<Evento> findByIdUsuarioFeed(int idUsuario) throws Exception
