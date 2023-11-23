@@ -23,6 +23,9 @@ import { TEvento } from '@/models/Evento';
 import { api } from '@/services/api';
 import { AxiosRequestConfig } from 'axios';
 import { user } from '@/services/UserService';
+import { EventosProvider, useEventos } from '@/context/EventosContext';
+import { CounterProvider, useCounter } from '@/context/Counter';
+import { MeusEventos } from './MeusEventos';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -41,100 +44,79 @@ export default function AuthenticatedLayout({
 	const router = useRouter();
 
 	const [novoEventoModalVisible, setNovoEventoModalVisible] = useState<boolean>(false);
-	const [meusEventos, setMeusEventos] = useState<TEvento[]>([]);
 
 	function handleLogout() {
 		localStorage.removeItem('user');
 		router.push('/login');
 	}
 
-	useEffect(() =>
-	{
-		const config: AxiosRequestConfig = { headers: { 'user': user.id } };
-
-		api.get(`/evento/eventosParticipacaoUsuario/${user.id}`, config)
-			.then(res => setMeusEventos(res.data));
-	}, []);
-
 	return (
-		<Auth>
-			<html lang="pt-BR">
-				<body className={`${inter.className} ${styles.body}`}>
+		<html lang="pt-BR">
+			{/*<head>
+				<title>UrSport</title>
+			</head>*/}
+			<body className={`${inter.className} ${styles.body}`}>
+				<Auth>
+					<EventosProvider>
 
-					<CriarEventoModal
-						isOpen={novoEventoModalVisible}
-						setIsOpen={setNovoEventoModalVisible}
-					/>
+						<CriarEventoModal
+							isOpen={novoEventoModalVisible}
+							setIsOpen={setNovoEventoModalVisible}
+						/>
 
-					<aside className={styles.aside}>
-						<Link href='/' className={styles.logo}>
-							<h1>UrSport</h1>
-						</Link>
+						<aside className={styles.aside}>
+							<Link href='/' className={styles.logo}>
+								<h1>UrSport</h1>
+							</Link>
 
-						<ul className={styles.mainMenu}>
-							<li><Link href='/'>
-								<AiOutlineHome />
-								<span>Página Inicial</span>
-							</Link></li>
+							<ul className={styles.mainMenu}>
+								<li><Link href='/'>
+									<AiOutlineHome />
+									<span>Página Inicial</span>
+								</Link></li>
 
-							<li><Link href={`/usuario/${user.id}`}>
-								<AiOutlineUser />
-								<span>Seu perfil</span>
-							</Link></li>
+								<li><Link href={`/usuario/${user?.id}`}>
+									<AiOutlineUser />
+									<span>Seu perfil</span>
+								</Link></li>
 
-							<li><Link href='/'>
-								<BsBookmark />
-								<span>Eventos Salvos</span>
-							</Link></li>
-						</ul>
+								<li><Link href='/'>
+									<BsBookmark />
+									<span>Eventos Salvos</span>
+								</Link></li>
+							</ul>
 
-						<div className={styles.personalData}>
-							<span>{ user.nome }</span>
-							<button type="button" onClick={handleLogout} title="Sair">
-								<BsDoorOpen />
-							</button>
+							<div className={styles.personalData}>
+								<span>{ user?.nome }</span>
+								<button type="button" onClick={handleLogout} title="Sair">
+									<BsDoorOpen />
+								</button>
+							</div>
+						</aside>
+
+						<main className={styles.main}>
+							{ children }
+						</main>
+
+						<div className={styles.eventsAside}>
+							
+							<HomeMap />
+							
+							<div className={styles.proxEventos}>
+								<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
+							
+								<MeusEventos />
+
+								<button type="button"
+									className={styles.btnNovoEvento}
+									onClick={() => setNovoEventoModalVisible(true)}
+								>Criar novo evento</button>
+							</div>
 						</div>
-					</aside>
 
-					<main className={styles.main}>
-						{ children }
-					</main>
-
-					<div className={styles.eventsAside}>
-						
-						<HomeMap />
-						
-						<div className={styles.proxEventos}>
-							<h2 className={styles.eventsTitle}>Seus próximos eventos</h2>
-						
-							{/* Seus Eventos */}
-							{meusEventos.length ? (
-								// Eventos
-								<div className={styles.eventos}>
-									{meusEventos.map((e, i) =>
-										<Evento
-											key={i}
-											evento={e}
-											displayDescricao={false}
-											//displayIcons={false}
-										/>
-									)}
-								</div>
-							) : (
-								// Sem eventos
-								<div className={styles.noEvents}>
-									<span>Você ainda não participa de nenhum evento.</span>
-								</div>
-							)}
-
-							<button type="button"
-								className={styles.btnNovoEvento}
-								onClick={() => setNovoEventoModalVisible(true)}
-							>Criar novo evento</button>
-						</div>
-					</div>
-				</body>
-			</html>
-		</Auth>
+					</EventosProvider>
+				</Auth>
+			</body>
+		</html>
 	);
 }

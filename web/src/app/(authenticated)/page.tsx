@@ -13,14 +13,15 @@ import { CardUsuario } from '@/components/CardUsuario';
 import { api } from '@/services/api';
 import { useEffect, useState } from 'react';
 import { user } from '@/services/UserService';
+import { useEventos } from '@/context/EventosContext';
 
 export default function HomePage()
 {
-   const [eventos, setEventos] = useState<TEvento[]>([]);
-   
+   const { feed, setFeed, removerEventoFeed, addMeuEvento } = useEventos();
+
    useEffect(() => {
-      //console.log(localStorage.getItem('user'));
-      api.get(`/evento/feed/${user.id}`).then(res => setEventos(res.data));
+      api.get(`/evento/feed/${user?.id}`)
+         .then(res => setFeed(res.data));
    }, []);
 
    return (
@@ -38,10 +39,15 @@ export default function HomePage()
          </div>
 
          <div className={styles.results}>
-            {eventos.map((e, i) =>
+            {feed.map((e, i) =>
                <Evento
                   key={e.id}
                   evento={e}
+                  onMarcarPresenca={() => {
+                     e.presente = true;
+                     addMeuEvento(e);
+                     removerEventoFeed(e.id!);
+                  }}
                />
             )}
          </div>

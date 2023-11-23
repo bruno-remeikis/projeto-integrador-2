@@ -17,12 +17,14 @@ import { user } from '@/services/UserService';
 
 type EventoProps = {
    evento: TEvento;
+   onMarcarPresenca: () => void;
+
    displayDescricao?: boolean;
    displayIcons?: boolean;
 }
 
 // Evento
-const Evento = ({ evento, displayDescricao, displayIcons }: EventoProps) =>
+const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: EventoProps) =>
 {
    const id = evento.id ? evento.id : 0;
    const { nome, nomeEsporte, nomeUsuario, descricao, local, dtEvento, qtdPresencas, presente } = evento;
@@ -33,11 +35,8 @@ const Evento = ({ evento, displayDescricao, displayIcons }: EventoProps) =>
    {
       e.stopPropagation(); // <- Impede que redireciona à pagina do evento ao clicar
 
-      api.post(`/presencaEvento?idUsuario=${user.id}&idEvento=${id}`, null).then(res =>
-      {
-         console.log(res);
-         router.refresh();
-      });
+      api.post(`/presencaEvento?idUsuario=${user?.id}&idEvento=${id}`, null)
+         .then(res => onMarcarPresenca());
    }
 
 	return (

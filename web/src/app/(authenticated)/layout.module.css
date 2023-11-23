@@ -85,7 +85,7 @@
    
    margin-left: var(--left-aside-width);
    margin-right: var(--right-aside-width);
-   overflow-y: scroll;
+   overflow-y: auto;
 }
 
 .eventsAside {
@@ -96,7 +96,7 @@
    width: var(--right-aside-width);
    /* min-height: 100vh; */
    height: 100vh;
-   overflow-y: scroll;
+   overflow-y: auto;
    /* padding: 1rem; */
    /* scroll-behavior: smooth; */
    border-left: var(--border-simple);
@@ -116,23 +116,7 @@
    color: white;
    text-align: center;
 }
-.eventsAside .eventos {
-   display: flex;
-   flex-direction: column;
-   gap: 0.4rem;
-
-   margin-top: 1rem;
-}
-.eventsAside .noEvents {
-   display: flex;
-   justify-content: center;
-
-   color: rgba(255, 255, 255, 0.8);
-   margin-top: 3rem;
-   text-align: center;
-   text-wrap: balance;
-}
-.btnNovoEvento {
+.eventsAside .btnNovoEvento {
    background-color: white;
    padding: 1rem;
    margin-top: 0.6rem;

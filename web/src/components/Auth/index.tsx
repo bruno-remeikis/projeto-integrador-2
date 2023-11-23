@@ -1,5 +1,6 @@
 'use client';
 
+import { user } from "@/services/UserService";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -13,14 +14,10 @@ export const Auth = ({ children }: AuthProps) =>
 
    const authorized: boolean = (() =>
    {
-      const user =
-         typeof window !== 'undefined' &&
-         !!localStorage.getItem('user');
-
       if(!user)
          router.push('/login');
-
-      return user;
+      
+      return !!user;
    })();
 
    return <>

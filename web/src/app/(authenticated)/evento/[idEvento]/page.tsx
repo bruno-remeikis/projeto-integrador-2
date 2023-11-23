@@ -16,7 +16,7 @@ export default function EventoPage()
 
    useEffect(() =>
    {
-      const config: AxiosRequestConfig = { headers: { 'user': user.id } };
+      const config: AxiosRequestConfig = { headers: { 'user': user?.id } };
 
       api.get(`/evento/${params.idEvento}`, config).then(res =>
       {

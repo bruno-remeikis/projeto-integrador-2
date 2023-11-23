@@ -33,19 +33,15 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
 
       const data: TEvento = {
          nome,
-         idUsuarioCriador: user.id!,
+         idUsuarioCriador: user?.id!,
          idEsporte,
          local,
          dtEvento: new Date(dtEvento),
          descricao
       }
       
-      console.log(data);
-
-      api.post('/evento', data).then(res =>
-      {
-         setIsOpen(false);
-      });
+      api.post('/evento', data)
+         .then(res => setIsOpen(false));
    }
 
    useEffect(() =>
