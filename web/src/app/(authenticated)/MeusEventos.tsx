@@ -1,10 +1,9 @@
 import { useEventos } from "@/context/EventosContext";
 import { api } from "@/services/api";
-import { AxiosRequestConfig } from "axios";
 import { useEffect } from "react";
 
 import styles from './MeusEventos.module.css';
-import { user } from "@/services/UserService";
+import { configWithUser, user } from "@/services/UserService";
 import Evento from "@/components/Evento";
 
 export function MeusEventos()
@@ -13,10 +12,8 @@ export function MeusEventos()
 
    useEffect(() =>
 	{
-		const config: AxiosRequestConfig = { headers: { 'user': user?.id } };
-
-			api.get(`/evento/eventosParticipacaoUsuario/${user?.id}`, config)
-				.then(res => setMeusEventos(res.data));
+		api.get(`/evento/eventosParticipacaoUsuario/${user?.id}`, configWithUser)
+			.then(res => setMeusEventos(res.data));
 	}, []);
    
    return (
@@ -30,6 +27,8 @@ export function MeusEventos()
 							evento={e}
 							onMarcarPresenca={() => {
 								e.presente = false;
+								if(e.qtdPresencas !== undefined)
+									e.qtdPresencas--;
 								addEventoFeed(e);
 								removerMeuEvento(e.id!);
 							}}

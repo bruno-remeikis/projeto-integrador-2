@@ -53,10 +53,18 @@
    padding-top: var(--height-barraFixa);
 }
 .pageHeader .fotoCapa {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
    position: relative;
-   background-color: purple;
+   /* background-color: purple; */
+   background-color: rgba(var(--color-dark-platform-a), 0.95);
    width: 100%;
    height: 12rem;
+}
+.pageHeader .fotoCapa svg {
+   font-size: 2rem;
 }
 .pageHeader .underCapa {
    --size-foto: 8rem;
@@ -119,4 +127,19 @@
    gap: 0.4rem;
    
    padding: 1rem;
+}
+
+.noEvents {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+
+   margin-top: 2rem;
+}
+.noEvents a {
+   /* background-color: var(--color-platform);
+   padding: 1rem;
+   margin-top: 0.6rem;
+   border-radius: 99rem; */
+   color: white;
 }

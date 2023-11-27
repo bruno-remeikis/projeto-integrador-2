@@ -12,13 +12,16 @@ export const Auth = ({ children }: AuthProps) =>
 {
    const router = useRouter();
 
-   const authorized: boolean = (() =>
+   const [authorized, setAuthorized] = useState<boolean>(false);
+
+   useEffect(() =>
    {
+      setAuthorized(!!user);
+
       if(!user)
          router.push('/login');
-      
-      return !!user;
-   })();
+   },
+   []);
 
    return <>
       { authorized && children }

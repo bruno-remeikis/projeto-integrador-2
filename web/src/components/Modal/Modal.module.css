@@ -47,5 +47,6 @@
    right: 0.4rem;
 }
 .header .control button {
+   background-color: transparent;
    font-size: 1.2rem;
 }

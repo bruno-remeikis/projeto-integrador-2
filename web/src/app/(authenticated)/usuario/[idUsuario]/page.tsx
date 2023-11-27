@@ -4,27 +4,35 @@ import { useParams, useRouter } from "next/navigation";
 
 import styles from './styles.module.css';
 import { FiArrowLeft, FiUser } from "react-icons/fi";
-import { TfiUser } from 'react-icons/tfi';
+import { FiCamera } from 'react-icons/fi';
 import Image from "next/image";
 import Evento from "@/components/Evento";
 import { TUsuario } from "@/models/Usuario";
 import { api } from "@/services/api";
 import { useEffect, useState } from "react";
+import { TEvento } from "@/models/Evento";
+import { configWithUser, user } from "@/services/UserService";
+import { useEventos } from "@/context/EventosContext";
+import Link from "next/link";
 
 export default function UsuarioPage()
 {
    const router = useRouter();
    const params = useParams();
+   const { addEventoFeed, removerEventoFeed, addMeuEvento, removerMeuEvento } = useEventos();
 
    const [usuario, setUsuario] = useState<TUsuario>();
-
-   //const eventos = [...Array(30)];
-   const eventos = [...Array(0)];
+   const [eventos, setEventos] = useState<TEvento[]>([]);
 
    useEffect(() =>
    {
-      api.get(`/usuario/${params.idUsuario}`)
-         .then(res => setUsuario(res.data));
+      api.get(`/usuario/${params.idUsuario}`).then(resU =>
+      {
+         setUsuario(resU.data);
+
+         api.get(`/evento/eventosUsuario/${resU.data.id}`, configWithUser)
+            .then(resE => setEventos(resE.data));
+      });
    }, []);
 
    return (
@@ -41,21 +49,24 @@ export default function UsuarioPage()
 
          <div className={styles.pageHeader}>
             <div className={styles.fotoCapa}>
-               <Image
-                  src='/capa-futebol-exemplo.jpg'
-                  alt='Foto de capa'
-                  //width={20} height={20}
-                  fill
-                  objectFit="cover"
-               />
+               {usuario?.fotoCapa
+                  ? <Image
+                     src='/capa-futebol-exemplo.jpg'
+                     alt='Foto de capa'
+                     //width={20} height={20}
+                     fill
+                     objectFit="cover"
+                  />
+                  : <FiCamera />}
             </div>
             <div className={styles.underCapa}>
                <div className={styles.foto}>
                   <FiUser />
                </div>
-               <div className={styles.underCapaBtns}>
-                  <button type="button">Editar perfil</button>
-               </div>
+               {user?.id === usuario?.id &&
+                  <div className={styles.underCapaBtns}>
+                     <button type="button">Editar perfil</button>
+                  </div>}
             </div>
             <div className={styles.mainInfos}>
                <div className={styles.topInfos}>
@@ -86,13 +97,29 @@ export default function UsuarioPage()
                   <Evento
                      key={i}
                      evento={e}
+                     onMarcarPresenca={() => {
+                        if(e.presente) {
+                           e.presente = false;
+                           if(e.qtdPresencas !== undefined)
+									   e.qtdPresencas--;
+                           addEventoFeed(e);
+                           removerMeuEvento(e.id!);
+                        }
+                        else {
+                           e.presente = true;
+                           if(e.qtdPresencas !== undefined)
+									   e.qtdPresencas++;
+                           addMeuEvento(e);
+                           removerEventoFeed(e.id!);
+                        }
+                     }}
                   />
                )
             ) : (
                // Sem eventos
                <div className={styles.noEvents}>
-                  <span>Você ainda não participa de nenhum evento.</span>
-                  <button type="button" className={styles.btnNovoEvento}>Criar novo evento</button>
+                  <span>Você ainda não criou nenhum evento.</span>
+                  <Link className={styles.btnNovoEvento} href='/'>Voltar ao Feed</Link>
                </div>
             )}
          </div>

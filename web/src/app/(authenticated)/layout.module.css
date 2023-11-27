@@ -5,13 +5,15 @@
    
    overflow-y: none;
 
+   position: relative; /* ! */
+
    --left-aside-width: 15rem;
    --right-aside-width: 26rem;
    --homemap-height: 20rem;
 }
 
 .aside {
-   position: fixed;
+   /* position: fixed; */
    left: 0;
 
    display: flex;
@@ -83,13 +85,13 @@
    /* min-height: 100vh; */
    height: 100vh;
    
-   margin-left: var(--left-aside-width);
-   margin-right: var(--right-aside-width);
+   /* margin-left: var(--left-aside-width); */
+   /* margin-right: var(--right-aside-width); */
    overflow-y: auto;
 }
 
 .eventsAside {
-   position: fixed;
+   /* position: fixed; */
    right: 0;
    top: 0;
    /* background-color: rgba(255, 255, 255, 0.25); */
@@ -117,7 +119,7 @@
    text-align: center;
 }
 .eventsAside .btnNovoEvento {
-   background-color: white;
+   background-color: var(--color-platform);
    padding: 1rem;
    margin-top: 0.6rem;
    border-radius: 99rem;

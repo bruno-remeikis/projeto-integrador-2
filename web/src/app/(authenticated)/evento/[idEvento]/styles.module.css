@@ -1,0 +1,31 @@
+.container {
+   /* min-height: 100vh; */
+   /* background-color: var(--color-platform); */
+}
+
+.header {
+   background-color: rgba(var(--color-dark-platform-a), 0.95);
+   padding: 1rem;
+   border-bottom: var(--border-simple);
+}
+.header .top {
+   display: flex;
+}
+.header .top :first-child {
+   flex-grow: 1;
+}
+.header h3 {
+   font-size: 1.8rem;
+}
+.header .data {
+   /* font-size: 0.8rem; */
+   display: flex;
+   align-items: center;
+}
+.header .data svg {
+   font-size: 1.2rem;
+}
+
+.body {
+   padding: 1rem;
+}

@@ -19,4 +19,7 @@ public class Usuario
 	private byte[] foto;
 	private byte[] fotoCapa;
 	private Date dtInsert;
+	
+	private Integer qtdSeguidores;
+	private Integer qtdSeguindo;
 }

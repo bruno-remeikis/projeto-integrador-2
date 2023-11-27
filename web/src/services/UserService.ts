@@ -1,4 +1,5 @@
 import { TUsuario } from "@/models/Usuario";
+import { AxiosRequestConfig } from "axios";
 
 export const user: TUsuario | null = (() =>
 {
@@ -10,3 +11,5 @@ export const user: TUsuario | null = (() =>
 
    return null; //{ nome: '', email: '', bio: '' }; // <- Gambiarra
 })();
+
+export const configWithUser: AxiosRequestConfig = { headers: { 'user': user?.id } };

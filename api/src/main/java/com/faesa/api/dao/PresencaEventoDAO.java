@@ -3,9 +3,12 @@ package com.faesa.api.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.LinkedList;
+import java.util.List;
 
 import com.faesa.api.connection.OracleConnector;
 import com.faesa.api.model.PresencaEvento;
+import com.faesa.api.model.Usuario;
 
 public class PresencaEventoDAO extends DAO
 {	
@@ -69,6 +72,41 @@ public class PresencaEventoDAO extends DAO
 			ps.setInt(1, id);
 			
 			ps.execute();
+		}
+	}
+	
+	public List<Usuario> selectParticipantes(int idEvento) throws Exception
+	{
+		String query =
+			"SELECT USUARIO.* FROM USUARIO " +
+			"INNER JOIN PRESENCA_EVENTO ON " +
+			"	USUARIO.ID = PRESENCA_EVENTO.ID_USUARIO " +
+			"WHERE PRESENCA_EVENTO.ID_EVENTO = ?";
+		
+		try(
+			Connection con = OracleConnector.getConnection();
+			PreparedStatement ps = con.prepareStatement(query);
+		) {
+			ps.setInt(1, idEvento);
+				
+			try(ResultSet rs = ps.executeQuery())
+			{
+				List<Usuario> participantes = new LinkedList<Usuario>();
+				
+				if(rs.next())
+				{
+					Usuario u = new Usuario();
+					
+					u.setId(rs.getInt("ID"));
+					u.setNome(rs.getString("NOME"));
+					u.setFoto(rs.getBytes("FOTO"));
+					u.setDtInsert(this.getDate(rs, "DT_INSERT"));
+					
+					participantes.add(u);
+				}
+				
+				return participantes;
+			}
 		}
 	}
 }

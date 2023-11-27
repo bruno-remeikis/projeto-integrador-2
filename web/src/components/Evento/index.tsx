@@ -10,10 +10,12 @@ import { TEvento } from '@/models/Evento';
 import { useRouter } from 'next/navigation';
 // Styles
 import styles from './Evento.module.css';
-import React, { SyntheticEvent } from 'react';
+import React, { SyntheticEvent, useState } from 'react';
 import { formatDate } from '@/utils/DateUtil';
 import { api } from '@/services/api';
 import { user } from '@/services/UserService';
+import { Modal } from '../Modal';
+import { TUsuario } from '@/models/Usuario';
 
 type EventoProps = {
    evento: TEvento;
@@ -31,6 +33,9 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
 
    const router = useRouter();
 
+   const [modalParticipantesOpen, setModalParticipantesOpen] = useState<boolean>(false);
+   const [participantes, setParticipantes] = useState<TUsuario[]>([]);
+
    function handleMarcarPresenca(e: SyntheticEvent)
    {
       e.stopPropagation(); // <- Impede que redireciona à pagina do evento ao clicar
@@ -39,7 +44,30 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
          .then(res => onMarcarPresenca());
    }
 
+   function handleMostrarParticipantes(e: SyntheticEvent)
+   {
+      e.stopPropagation();
+
+      if(qtdPresencas === 0)
+         return;
+
+      api.get(`/presencaEvento/participantes/${id}`).then(res =>
+      {
+         setParticipantes(res.data);
+         setModalParticipantesOpen(true);
+      });
+   }
+
 	return (
+      <>
+      <Modal
+         isOpen={modalParticipantesOpen}
+         setIsOpen={setModalParticipantesOpen}
+      >
+         {participantes.map(p =>
+            <span>{ p.nome }</span>)}
+      </Modal>
+
       <div
          className={styles.event}
          onClick={() => router.push(`/evento/${id}`)}
@@ -89,26 +117,31 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
                </button>
             </div>*/}
             <div className={styles.iconGroup}>
-               <div className={styles.icon} title='Participantes'>
+               <div
+                  className={styles.icon}
+                  title='Participantes'
+                  onClick={handleMostrarParticipantes}
+               >
                   <AiOutlineUser />
                   <span>{ qtdPresencas }</span> 
                </div>
             </div>
             <div className={styles.iconGroup}>
-               <div //type="button"
+               {/* Botão "Participar" ou "Participando"/"Sair" */}
+               <div
                   className={`
                      ${styles.marcarPresenca}
                      ${presente ? styles.presente : styles.ausente}
                   `}
-                  //title='Marcar presença'
+                  title={`${presente ? 'Desmarcar' : 'Marcar'} presença`}
                   onClick={handleMarcarPresenca}
                >
-                  <AiOutlineCarryOut />
-                  <span>{ presente ? 'Participando' : 'Participar' }</span>
+                  <AiOutlineCarryOut />   
                </div>
             </div>
          </div>}
       </div>
+      </>
 	);
 }
 export default Evento;

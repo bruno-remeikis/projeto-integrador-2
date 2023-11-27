@@ -7,6 +7,8 @@
 } */
 
 .event {
+   --height-eventIcons: 2.6rem;
+
    background-color: var(--color-platform);
    /* padding: 0.6rem; */
    /* margin-top: 0.4rem; */
@@ -18,7 +20,7 @@
    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 .eventHeader {
-   background-color: rgba(0, 0, 0, 0.04);
+   background-color: var(--color-dark-platform);
    padding: 0.6rem;
 }
 .eventHeader .topInfo {
@@ -44,6 +46,8 @@
    align-items: center;
    justify-content: space-between;
 
+   height: var(--height-eventIcons);
+
    /* padding: 0.6rem; */
 }
 .iconGroup {
@@ -51,8 +55,11 @@
 }
 .icon {
    display: flex;
+   align-items: center;
+
    /* align-items: center; */
-   padding: 0.6rem;
+   height: var(--height-eventIcons);
+   padding: 0 0.6rem;
    font-size: 1.1rem;
    background-color: inherit;
 }
@@ -67,22 +74,41 @@
    display: flex;
    gap: 0.2rem;
    flex-direction: row-reverse;
-   align-items: flex-end;
+   align-items: center;
+   /* justify-content: center; */
 
-   padding: 0.6rem 0.8rem;
+   /* padding: 0.6rem 0.8rem 0; */
+   height: var(--height-eventIcons);
+   padding-right: 1.1rem;
    border-left: var(--border-simple);
 }
 .marcarPresenca svg {
    font-size: 1.1rem;
 }
-.marcarPresenca span {
-   font-size: 0.9rem;
-}
 .marcarPresenca.presente {
    color: rgba(0, 0, 0, 0.6);
    background-color: transparent;
+   width: 9.4rem;
+   /* transition: color 0.1s; */
+   transition: background-color 0.15s;
+}
+.marcarPresenca.presente::after {
+   content: 'Participando';
+}
+.marcarPresenca.presente:hover {
+   background-color: rgba(255, 0, 0, 0.74);
+   /* background-image: linear-gradient(to right, transparent 2%, rgba(255, 0, 0, 0.74)); */
+   color: rgb(130, 0, 0);
+}
+.marcarPresenca.presente:hover::after {
+   content: 'Sair'
 }
 .marcarPresenca.ausente {
    color: green;
    background-color: rgba(0, 255, 0, 0.4);
+   width: 8rem;
+   transition: color 1s;
+}
+.marcarPresenca.ausente::after {
+   content: 'Participar';
 }

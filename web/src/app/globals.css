@@ -12,6 +12,8 @@ body {
   --color-main-a: 40, 184, 40; /*0, 189, 0;*/
   --color-main: rgb(var(--color-main-a));
   --color-platform: rgb(242, 255, 242);
+  --color-dark-platform-a: 233, 245, 233;
+  --color-dark-platform: rgb(var(--color-dark-platform-a));
 
   --border-simple: 1px solid rgba(0, 0, 0, 0.2);
 

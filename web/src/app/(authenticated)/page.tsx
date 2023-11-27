@@ -39,17 +39,21 @@ export default function HomePage()
          </div>
 
          <div className={styles.results}>
-            {feed.map((e, i) =>
-               <Evento
-                  key={e.id}
-                  evento={e}
-                  onMarcarPresenca={() => {
-                     e.presente = true;
-                     addMeuEvento(e);
-                     removerEventoFeed(e.id!);
-                  }}
-               />
-            )}
+            {feed.length > 0
+               ? feed.map(e =>
+                  <Evento
+                     key={e.id}
+                     evento={e}
+                     onMarcarPresenca={() => {
+                        e.presente = true;
+                        if(e.qtdPresencas !== undefined)
+									e.qtdPresencas++;
+                        addMeuEvento(e);
+                        removerEventoFeed(e.id!);
+                     }}
+                  />
+               )
+               : <span style={{ color: 'white', textAlign: 'center', marginTop: '6rem' }}>Sem novos eventos pra você.</span>}
          </div>
       </div>
    );

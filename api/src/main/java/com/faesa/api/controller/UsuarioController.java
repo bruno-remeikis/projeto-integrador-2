@@ -80,6 +80,7 @@ public class UsuarioController
 			);
 		}
 		catch(Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.internalServerError().build();
 		}
 	}

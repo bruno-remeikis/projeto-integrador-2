@@ -1,9 +1,12 @@
 package com.faesa.api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.faesa.api.dao.PresencaEventoDAO;
 import com.faesa.api.model.PresencaEvento;
+import com.faesa.api.model.Usuario;
 
 @Service
 public class PresencaEventoService
@@ -25,5 +28,10 @@ public class PresencaEventoService
 		}
 		else
 			dao.delete(pe.getId());
+	}
+	
+	public List<Usuario> listParticipantes(int idEvento) throws Exception
+	{
+		return new PresencaEventoDAO().selectParticipantes(idEvento);
 	}
 }

@@ -57,7 +57,17 @@ public class UsuarioDAO extends DAO
 	public Usuario select(int id) throws Exception
 	{
 		String query =
-			"SELECT * FROM USUARIO WHERE ID = ?";
+			"SELECT " +
+			"	 U.* " +
+			//"	,COUNT(SEGUIDOR.ID) AS QTD_SEGUIDORES " +
+			//"	,COUNT(SEGUINDO.ID) AS QTD_SEGUINDO " +
+			"FROM USUARIO U " +
+			//"LEFT JOIN CONEXAO_USUARIOS SEGUIDOR ON " +
+			//"	SEGUIDOR.ID_SEGUIDOR = U.ID " +
+			//"LEFT JOIN CONEXAO_USUARIOS SEGUINDO ON " +
+			//"	SEGUINDO.ID_SEGUIDO = U.ID " +
+			"WHERE U.ID = ? "; // +
+			//"GROUP BY U.ID";
 		
 		try(
 			Connection con = OracleConnector.getConnection();
@@ -67,13 +77,19 @@ public class UsuarioDAO extends DAO
 			
 			ResultSet rs = ps.executeQuery();
 			
-			if(rs.next()) {
+			if(rs.next())
+			{
 				Usuario u = new Usuario();
+				
 				u.setId(rs.getInt("ID"));
 				u.setNome(rs.getString("NOME"));
 				u.setEmail(rs.getString("EMAIL"));
 				u.setBio(rs.getString("BIO"));
 				u.setDtInsert(this.getDate(rs, "DT_INSERT"));
+				
+				//u.setQtdSeguidores(rs.getInt("QTD_SEGUIDORES"));
+				//u.setQtdSeguindo(rs.getInt("QTD_SEGUINDO"));
+				
 				return u;
 			}
 			
