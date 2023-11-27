@@ -4,16 +4,19 @@ import { TEvento } from "@/models/Evento";
 import { configWithUser, user } from "@/services/UserService";
 import { api } from "@/services/api";
 import { formatDate } from "@/utils/DateUtil";
-import { useParams } from "next/navigation"
+import { useParams, useRouter } from "next/navigation"
 import { useEffect, useState } from "react";
 import Link from 'next/link';
 
 import styles from './styles.module.css';
 import { AiOutlineEnvironment } from "react-icons/ai";
+import { FiArrowLeft } from "react-icons/fi";
+import { FixedTopbar } from "@/components/FixedTopbar";
 
 export default function EventoPage()
 {
    const params = useParams();
+   const router = useRouter();
 
    const [evento, setEvento] = useState<TEvento | undefined>(undefined);
 
@@ -25,6 +28,13 @@ export default function EventoPage()
 
    return (
       <div className={styles.container}>
+
+         <FixedTopbar>
+            <span className={styles.fixedNome}>{ evento?.nome }</span>
+            <span className={styles.fixedQtdParticipantes}>{ evento?.qtdPresencas } participantes</span>
+         </FixedTopbar>
+
+         <div className={styles.imgEvento} />
 
          <div className={styles.header}>
             <div className={styles.top}>

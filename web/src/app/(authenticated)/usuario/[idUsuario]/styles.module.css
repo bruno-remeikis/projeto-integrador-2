@@ -1,56 +1,21 @@
 .page {
-   --height-barraFixa: 2.8rem;
+   /* --height-barraFixa: 2.8rem; */
    --color-pageHeader-a: var(--color-main-a);
 
    position: relative;
 }
 
-.fixedTopbar {
-   position: fixed;
-   z-index: 99;
-   right: var(--right-aside-width);
-   left: var(--left-aside-width);
-
-   display: flex;
-   align-items: center;
-
-   background-color: rgba(var(--color-bg-a), 0.9);
-   /* width: 100%; */
-   height: var(--height-barraFixa);
-   border-bottom: var(--border-simple);
-}
-.fixedTopbar .backBtn {
-   display: flex;
-   align-items: center;
-   justify-content: center;
-
-   background-color: transparent;
-   width: 2rem;
-   height: 2rem;
-   margin-left: 0.4rem;
-   border-radius: 99rem;
-}
-.fixedTopbar .backBtn:hover {
-   background-color: rgba(255, 255, 255, 0.2);
-   opacity: 1;
-}
-.fixedTopbar .backBtn svg {
-   font-size: 1.2rem;
-}
-.fixedTopbar .fixedInfos {
-   margin-left: 0.6rem;
-}
-.fixedTopbar .fixedInfos .fixedNome {
+.fixedNome {
 
 }
-.fixedTopbar .fixedInfos .fixedQtdEventos {
+.fixedQtdEventos {
    font-size: 0.8rem;
 }
 
 .pageHeader {
    background-color: rgb(var(--color-pageHeader-a));
    /* color: white; */
-   padding-top: var(--height-barraFixa);
+   /* padding-top: var(--height-barraFixa); */
 }
 .pageHeader .fotoCapa {
    display: flex;
@@ -59,7 +24,8 @@
 
    position: relative;
    /* background-color: purple; */
-   background-color: rgba(var(--color-dark-platform-a), 0.95);
+   /* background-color: rgba(var(--color-dark-platform-a), 0.95); */
+   background-color: var(--color-platform);
    width: 100%;
    height: 12rem;
 }

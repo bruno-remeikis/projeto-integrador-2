@@ -1,10 +1,28 @@
 .container {
    /* min-height: 100vh; */
    /* background-color: var(--color-platform); */
+
+   --height-barraFixa: 2.8rem;
+
+   position: relative;
+}
+
+.fixedNome {
+
+}
+.fixedQtdParticipantes {
+   font-size: 0.8rem;
+}
+
+.imgEvento {
+   /* background-color: rgba(var(--color-dark-platform-a), 0.95); */
+   background-color: var(--color-platform);
+   width: 100%;
+   height: 12rem;
 }
 
 .header {
-   background-color: rgba(var(--color-dark-platform-a), 0.95);
+   /* background-color: rgba(var(--color-dark-platform-a), 0.95); */
    padding: 1rem;
    border-bottom: var(--border-simple);
 }

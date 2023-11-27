@@ -14,6 +14,7 @@ import { TEvento } from "@/models/Evento";
 import { configWithUser, user } from "@/services/UserService";
 import { useEventos } from "@/context/EventosContext";
 import Link from "next/link";
+import { FixedTopbar } from "@/components/FixedTopbar";
 
 export default function UsuarioPage()
 {
@@ -37,15 +38,10 @@ export default function UsuarioPage()
 
    return (
       <div className={styles.page}>
-         <div className={styles.fixedTopbar}>
-            <button type="button" className={styles.backBtn} onClick={() => router.back()}>
-               <FiArrowLeft />
-            </button>
-            <div className={styles.fixedInfos}>
-               <span className={styles.fixedNome}>{ usuario?.nome }</span>
-               <span className={styles.fixedQtdEventos}>14 eventos</span>
-            </div>
-         </div>
+         <FixedTopbar>
+            <span className={styles.fixedNome}>{ usuario?.nome }</span>
+            <span className={styles.fixedQtdEventos}>14 eventos</span>
+         </FixedTopbar>
 
          <div className={styles.pageHeader}>
             <div className={styles.fotoCapa}>

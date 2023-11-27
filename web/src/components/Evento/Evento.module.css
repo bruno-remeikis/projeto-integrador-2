@@ -62,12 +62,16 @@
    padding: 0 0.6rem;
    font-size: 1.1rem;
    background-color: inherit;
+   transition: background-color 0.15s;
 }
 /* .icon:not(:first-child) {
    margin-left: 1.4rem;
 } */
 .icon :not(:first-child) {
    margin-left: 0.2rem;
+}
+.icon:hover {
+   background-color: rgba(0, 0, 0, 0.14);
 }
 
 .marcarPresenca {
