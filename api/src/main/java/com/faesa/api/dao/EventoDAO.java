@@ -133,7 +133,7 @@ public class EventoDAO extends DAO
 		}
 	}
 	
-	public List<Evento> selectByIdUsuarioParticipacao(int idUsuario, int idUsuarioSession) throws Exception
+	public List<Evento> selectByIdUsuarioParticipacao(int idUsuario) throws Exception
 	{
 		String query =
 			"SELECT " +
@@ -161,7 +161,7 @@ public class EventoDAO extends DAO
 			Connection con = OracleConnector.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
 		){
-			ps.setInt(1, idUsuarioSession);
+			ps.setInt(1, idUsuario);
 			ps.setInt(2, idUsuario);
 			
 			ResultSet rs = ps.executeQuery();

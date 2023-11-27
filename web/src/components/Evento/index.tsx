@@ -53,6 +53,7 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
 
       api.get(`/presencaEvento/participantes/${id}`).then(res =>
       {
+         console.log(res.data);
          setParticipantes(res.data);
          setModalParticipantesOpen(true);
       });
@@ -61,11 +62,28 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
 	return (
       <>
       <Modal
+         className={styles.modalUsuarios}
+         style={{ padding: '0.6rem 0 0.4rem 0' }}
          isOpen={modalParticipantesOpen}
          setIsOpen={setModalParticipantesOpen}
+         minWidth='20rem'
+         title={nome}
+         titleStyle={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)', paddingTop: '0.2rem' }}
       >
          {participantes.map(p =>
-            <span>{ p.nome }</span>)}
+            <div key={p.id}
+               className={styles.usuario}
+               onClick={() => {
+                  setModalParticipantesOpen(false);
+                  router.push(`/usuario/${p.id}`);
+               }}
+            >
+               <span className={styles.img}>
+                  <AiOutlineUser />
+               </span>
+               <span className={styles.nome}>{ p.nome }</span>
+            </div>
+         )}
       </Modal>
 
       <div

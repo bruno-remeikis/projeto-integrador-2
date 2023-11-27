@@ -57,6 +57,7 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
          title="Novo Evento"
          width="50rem"
          minWidth="25rem"
+         style={{ padding: '0.4rem 2rem 1rem 2rem' }}
       >
          <form className="form" onSubmit={handleSubmit}>
             <div className="inline-form-group">

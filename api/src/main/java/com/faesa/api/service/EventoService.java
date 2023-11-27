@@ -25,9 +25,9 @@ public class EventoService
 		return new EventoDAO().selectByIdUsuario(idUsuario, idUsuarioSession);
 	}
 	
-	public List<Evento> findByIdUsuarioParticipacao(int idUsuario, int idUsuarioSession) throws Exception
+	public List<Evento> findByIdUsuarioParticipacao(int idUsuario) throws Exception
 	{
-		return new EventoDAO().selectByIdUsuarioParticipacao(idUsuario, idUsuarioSession);
+		return new EventoDAO().selectByIdUsuarioParticipacao(idUsuario);
 	}
 	
 	public List<Evento> findByIdUsuarioFeed(int idUsuario) throws Exception

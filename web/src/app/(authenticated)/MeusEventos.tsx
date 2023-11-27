@@ -12,7 +12,7 @@ export function MeusEventos()
 
    useEffect(() =>
 	{
-		api.get(`/evento/eventosParticipacaoUsuario/${user?.id}`, configWithUser)
+		api.get(`/evento/eventosParticipacaoUsuario/${user?.id}`)
 			.then(res => setMeusEventos(res.data));
 	}, []);
    

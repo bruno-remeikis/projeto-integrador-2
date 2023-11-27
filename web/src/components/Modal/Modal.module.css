@@ -23,30 +23,30 @@
 
    background-color: white;
    margin: 1rem 0;
-   padding: 2rem;
+   /* padding: 2rem; */
    border-radius: 0.4rem;
 }
 .header {
-   position: absolute;
+   /* position: absolute;
    top: 0;
    left: 0;
-   right: 0;
+   right: 0; */
 }
 .header .title {
-   position: absolute;
-   left: 0;
-   right: 0;
-
-   margin-top: 0.4rem;
+   padding: 0.6rem 0;
    font-size: 1.2rem;
    text-align: center;
 }
 .header .control {
    position: absolute;
-   top: 0.4rem;
-   right: 0.4rem;
+   /* top: 0.4rem;
+   right: 0.4rem; */
+   top: 0;
+   right: 0;
 }
 .header .control button {
    background-color: transparent;
+   width: 2rem;
+   height: 2rem;
    font-size: 1.2rem;
 }

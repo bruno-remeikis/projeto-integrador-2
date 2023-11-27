@@ -112,3 +112,37 @@
 .marcarPresenca.ausente::after {
    content: 'Participar';
 }
+
+.modalUsuarios .usuario {
+   display: flex;
+   padding: 0.4rem 0.8rem;
+   align-items: center;
+   cursor: pointer;
+   transition: background-color 0.15s;
+}
+.modalUsuarios .usuario:hover {
+   background-color: var(--color-dark-platform);
+}
+.modalUsuarios .usuario:not(:first-child) {
+   /* margin-top: 0.4rem; */
+   border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+.modalUsuarios .usuario .img {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   background-color: var(--color-dark-platform);
+   width: 2.6rem;
+   height: 2.6rem;
+   border-radius: 99rem;
+   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+   /* border: 1px solid rgba(0, 0, 0, 0.1); */
+}
+.modalUsuarios .usuario .img svg {
+   font-size: 1.6rem;
+}
+.modalUsuarios .usuario .nome {
+   margin-left: 0.8rem;
+   font-size: 1.1rem;
+}

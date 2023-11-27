@@ -80,12 +80,11 @@ public class EventoController
 	
 	@GetMapping("/eventosParticipacaoUsuario/{idUsuario}")
 	public ResponseEntity<List<Evento>> getEventosParticipacaoUsuario(
-		@PathVariable int idUsuario,
-		@RequestHeader("user") int idUsuarioSession
+		@PathVariable int idUsuario
 	) {
 		try {
 			return ResponseEntity.ok(
-				eventoService.findByIdUsuarioParticipacao(idUsuario, idUsuarioSession)
+				eventoService.findByIdUsuarioParticipacao(idUsuario)
 			);
 		}
 		catch(Exception e) {

@@ -1,15 +1,15 @@
 'use client';
 
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, HTMLAttributes, SetStateAction } from 'react';
 import styles from './Modal.module.css';
 import { FiX } from 'react-icons/fi';
 
-export type ModalProps = {
+export type ModalProps = HTMLAttributes<HTMLDivElement> & {
    isOpen: boolean;
    setIsOpen: Dispatch<SetStateAction<boolean>>;
 
    title?: string;
-   style?: React.CSSProperties;
+   titleStyle?: React.CSSProperties;
    width?: string;
    minWidth?: string;
    maxWidth?: string;
@@ -17,16 +17,23 @@ export type ModalProps = {
    children: React.ReactNode;
 }
 
-export const Modal = ({ isOpen, setIsOpen, title, style, width, minWidth, maxWidth, children }: ModalProps) =>
+export const Modal = ({ isOpen, setIsOpen, title, titleStyle, width, minWidth, maxWidth, children, className, style, ...props }: ModalProps) =>
 {
    return (
-      <div className={styles.overlay} style={{ display: isOpen ? 'flex' : 'none' }}>
+      <div
+         className={`${styles.overlay} ${className}`}
+         style={{ display: isOpen ? 'flex' : 'none', ...style }}
+         {...props}
+      >
          <div className={styles.containerColumn} style={{ width, minWidth, maxWidth }}>
             <div className={styles.container} style={style}>
 
                <div className={styles.header}>
                   {title &&
-                     <span className={styles.title}>{ title }</span>}
+                     <span
+                        className={styles.title}
+                        style={titleStyle}
+                     >{ title }</span>}
 
                   <div className={styles.control}>
                      <button type="button" onClick={() => setIsOpen(false)}>

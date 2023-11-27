@@ -93,7 +93,7 @@ public class PresencaEventoDAO extends DAO
 			{
 				List<Usuario> participantes = new LinkedList<Usuario>();
 				
-				if(rs.next())
+				while(rs.next())
 				{
 					Usuario u = new Usuario();
 					
