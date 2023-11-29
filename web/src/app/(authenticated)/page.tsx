@@ -19,20 +19,48 @@ export default function HomePage()
 {
    const { feed, setFeed, removerEventoFeed, addMeuEvento } = useEventos();
 
+   const [pesquisa, setPesquisa] = useState<string>('');
+   const [feedPesquisa, setFeedPesquisa] = useState<TEvento[]>(feed);
+
    useEffect(() => {
-      api.get(`/evento/feed/${user?.id}`)
-         .then(res => setFeed(res.data));
+      api.get(`/evento/feed/${user?.id}`).then(res =>
+      {
+         setFeed(res.data);
+         setFeedPesquisa(res.data);
+      });
    }, []);
+
+   function handlePesquisa(pesquisa: string)
+   {
+      setPesquisa(pesquisa);
+
+      setFeedPesquisa(feed.filter(e =>
+      {
+         const auxPesquisa = pesquisa.toUpperCase().trim();
+
+         console.log(e);
+
+         return (
+            e.nome.toUpperCase().includes(auxPesquisa) ||
+            e.local.toUpperCase().includes(auxPesquisa) ||
+            e.nomeEsporte?.toUpperCase().includes(auxPesquisa) ||
+            e.nomeUsuario?.toUpperCase().includes(auxPesquisa)
+         );
+      }));
+   }
 
    return (
       <div className={styles.searchContainer}>
          <div className={styles.searchTop}>
-            <Link href="/" className={styles.homeBtn}>
+            {/*<Link href="/" className={styles.homeBtn}>
                <AiOutlineHome />
-            </Link>
+            </Link>*/}
             <div className={styles.search}>
-               <input type="text" placeholder="Pesquise por eventos ou usuários" />
-               <button type="button">
+               <input type="text"
+                  placeholder="Pesquise por eventos ou usuários"
+                  onChange={e => handlePesquisa(e.target.value)}
+               />
+               <button type="button" onClick={e => handlePesquisa(pesquisa)}>
                   <FiSearch />
                </button>
             </div>
@@ -40,7 +68,7 @@ export default function HomePage()
 
          <div className={styles.results}>
             {feed.length > 0
-               ? feed.map(e =>
+               ? feedPesquisa.map(e =>
                   <Evento
                      key={e.id}
                      evento={e}
