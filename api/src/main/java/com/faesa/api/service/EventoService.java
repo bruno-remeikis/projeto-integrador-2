@@ -10,9 +10,9 @@ import com.faesa.api.model.Evento;
 @Service
 public class EventoService
 {
-	public void create(Evento e) throws Exception
+	public int create(Evento e) throws Exception
 	{
-		new EventoDAO().insert(e);
+		return new EventoDAO().insert(e);
 	}
 	
 	public Evento findById(int id, int idUsuarioSession) throws Exception

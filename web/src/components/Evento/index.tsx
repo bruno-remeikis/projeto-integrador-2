@@ -16,6 +16,7 @@ import { api } from '@/services/api';
 import { user } from '@/services/UserService';
 import { Modal } from '../Modal';
 import { TUsuario } from '@/models/Usuario';
+import { ModalUsuarios } from '../ModalUsuarios';
 
 type EventoProps = {
    evento: TEvento;
@@ -44,7 +45,7 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
          .then(res => onMarcarPresenca());
    }
 
-   function handleMostrarParticipantes(e: SyntheticEvent)
+   function handleShowParticipantes(e: SyntheticEvent)
    {
       e.stopPropagation();
 
@@ -61,30 +62,13 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
 
 	return (
       <>
-      <Modal
-         className={styles.modalUsuarios}
-         style={{ padding: '0.6rem 0 0.4rem 0' }}
+
+      <ModalUsuarios
          isOpen={modalParticipantesOpen}
          setIsOpen={setModalParticipantesOpen}
-         minWidth='20rem'
          title={nome}
-         titleStyle={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)', paddingTop: '0.2rem' }}
-      >
-         {participantes.map(p =>
-            <div key={p.id}
-               className={styles.usuario}
-               onClick={() => {
-                  setModalParticipantesOpen(false);
-                  router.push(`/usuario/${p.id}`);
-               }}
-            >
-               <span className={styles.img}>
-                  <AiOutlineUser />
-               </span>
-               <span className={styles.nome}>{ p.nome }</span>
-            </div>
-         )}
-      </Modal>
+         usuarios={participantes}
+      />
 
       <div
          className={styles.event}
@@ -138,7 +122,7 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
                <div
                   className={styles.icon}
                   title='Participantes'
-                  onClick={handleMostrarParticipantes}
+                  onClick={handleShowParticipantes}
                >
                   <AiOutlineUser />
                   <span>{ qtdPresencas }</span> 
@@ -159,6 +143,7 @@ const Evento = ({ evento, onMarcarPresenca, displayDescricao, displayIcons }: Ev
             </div>
          </div>}
       </div>
+      
       </>
 	);
 }

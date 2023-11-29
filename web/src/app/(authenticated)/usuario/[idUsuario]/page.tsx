@@ -15,6 +15,9 @@ import { configWithUser, user } from "@/services/UserService";
 import { useEventos } from "@/context/EventosContext";
 import Link from "next/link";
 import { FixedTopbar } from "@/components/FixedTopbar";
+import { TConexaoUsuarios } from "@/models/ConexaoUsuarios";
+import { ModalUsuarios } from "@/components/ModalUsuarios";
+import { firstWordOf } from "@/utils/StringUtil";
 
 export default function UsuarioPage()
 {
@@ -23,14 +26,59 @@ export default function UsuarioPage()
    const { addEventoFeed, removerEventoFeed, addMeuEvento, removerMeuEvento } = useEventos();
 
    const [usuario, setUsuario] = useState<TUsuario>();
+
+   const [modalSeguindoIsOpen, setModalSeguindoIsOpen] = useState<boolean>(false);
+   const [modalSeguidoresIsOpen, setModalSeguidoresIsOpen] = useState<boolean>(false);
+   const [seguindo, setSeguindo] = useState<TUsuario[]>([]);
+   const [seguidores, setSeguidores] = useState<TUsuario[]>([]);
+
    const [eventos, setEventos] = useState<TEvento[]>([]);
 
-   function handleSeguir() {
+   function handleSeguir()
+   {
+      const data: TConexaoUsuarios = {
+         idSeguidor: user?.id!,
+         idSeguido: usuario?.id!
+      }
 
+      api.post('/conexaoUsuarios', data).then(_ =>
+      {
+         setUsuario(u => !u
+            ? undefined
+            : {
+               ...u,
+               qtdSeguidores: u.qtdSeguidores! + 1,
+               sessionSeguindo: true
+            }
+         );
+      });
    }
 
-   function handlePararSeguir() {
+   function handlePararSeguir()
+   {
+      api.delete(`/conexaoUsuarios?idSeguido=${usuario?.id!}`, configWithUser).then(res =>
+      {
+         setUsuario(u => !u
+            ? undefined
+            : {
+               ...u,
+               qtdSeguidores: u.qtdSeguidores! - 1,
+               sessionSeguindo: false
+            }
+         );
+      });
+   }
 
+   async function handleOpenSeguindo()
+   {
+      setSeguindo((await api.get(`/conexaoUsuarios/seguindo/${usuario?.id}`)).data);
+      setModalSeguindoIsOpen(true);
+   }
+
+   async function handleOpenSeguidores()
+   {
+      setSeguidores((await api.get(`/conexaoUsuarios/seguidores/${usuario?.id}`)).data);
+      setModalSeguidoresIsOpen(true);
    }
 
    useEffect(() =>
@@ -45,6 +93,21 @@ export default function UsuarioPage()
    }, []);
 
    return (
+      <>
+      <ModalUsuarios
+         isOpen={modalSeguindoIsOpen}
+         setIsOpen={setModalSeguindoIsOpen}
+         usuarios={seguindo}
+         title={`Seguidos por ${firstWordOf(usuario?.nome)}`}
+      />
+
+      <ModalUsuarios
+         isOpen={modalSeguidoresIsOpen}
+         setIsOpen={setModalSeguidoresIsOpen}
+         usuarios={seguidores}
+         title={`Seguidores de ${firstWordOf(usuario?.nome)}`}
+      />
+
       <div className={styles.page}>
          <FixedTopbar>
             <span className={styles.fixedNome}>{ usuario?.nome }</span>
@@ -69,7 +132,7 @@ export default function UsuarioPage()
                </div>
                <div className={styles.underCapaBtns}>
                {user?.id === usuario?.id
-                  ? <button type="button">Editar perfil</button>
+                  ? null //<button type="button">Editar perfil</button>
                   : (
                      usuario?.sessionSeguindo
                         ? <button type="button" onClick={handlePararSeguir}>Parar de seguir</button>
@@ -85,12 +148,12 @@ export default function UsuarioPage()
                <div className={styles.bio}>
                   <span>{ usuario?.bio }</span>
                </div>
-               <div className={styles.conexoesInfo}>
-                  <div>
+               <div className={styles.conexoesInfos}>
+                  <div className={styles.btnConexoes} onClick={handleOpenSeguindo}>
                      <span>{ usuario?.qtdSeguindo! }</span>
                      <span>&nbsp;Seguindo</span>
                   </div>
-                  <div>
+                  <div className={styles.btnConexoes} onClick={handleOpenSeguidores}>
                      <span>{ usuario?.qtdSeguidores! }</span>
                      <span>&nbsp;Seguidores</span>
                   </div>
@@ -133,5 +196,7 @@ export default function UsuarioPage()
             )}
          </div>
       </div>
+
+      </>
    );
 }

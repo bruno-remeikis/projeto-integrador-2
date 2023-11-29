@@ -13,7 +13,7 @@ import { BsBookmark, BsDoorOpen } from 'react-icons/bs';
 // Components
 import HomeMap from '@/components/HomeMap/HomeMap';
 import Evento from '../../components/Evento';
-import { CriarEventoModal } from '@/components/CriarEventoModal';
+import { ModalCriarEvento } from '@/components/ModalCriarEvento';
 import { Auth } from '@/components/Auth';
 import { Modal } from '@/components/Modal';
 import { useEffect, useState } from 'react';
@@ -59,7 +59,7 @@ export default function AuthenticatedLayout({
 				<Auth>
 					<EventosProvider>
 
-						<CriarEventoModal
+						<ModalCriarEvento
 							isOpen={novoEventoModalVisible}
 							setIsOpen={setNovoEventoModalVisible}
 						/>

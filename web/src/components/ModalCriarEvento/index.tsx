@@ -2,19 +2,22 @@
 
 import { FormEvent, useEffect, useState } from 'react';
 import { Modal, ModalProps } from '../Modal';
-import styles from './CriarEventoModal.module.css';
+import styles from './styles.module.css';
 import { api } from '@/services/api';
 import { TEvento } from '@/models/Evento';
 import { TEsporte } from '@/models/Esporte';
 import { user } from '@/services/UserService';
+import { useRouter } from 'next/navigation';
 //import Modal from 'react-modal';
 
-type CriarEventoModalProps = Omit<ModalProps, 'children'> & {
+type ModalCriarEventoProps = Omit<ModalProps, 'children'> & {
 
 }
 
-export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =>
+export const ModalCriarEvento = ({ isOpen, setIsOpen }: ModalCriarEventoProps) =>
 {
+   const router = useRouter();
+
    const [esportes, setEsportes] = useState<TEsporte[]>([]);
    const [nome, setNome] = useState<string>('');
    const [idEsporte, setIdEsporte] = useState<number>(0);
@@ -40,8 +43,11 @@ export const CriarEventoModal = ({ isOpen, setIsOpen }: CriarEventoModalProps) =
          descricao
       }
       
-      api.post('/evento', data)
-         .then(res => setIsOpen(false));
+      api.post('/evento', data) .then(res =>
+      {
+         setIsOpen(false);
+         router.push(`/evento/${res.data}`);
+      });
    }
 
    useEffect(() =>

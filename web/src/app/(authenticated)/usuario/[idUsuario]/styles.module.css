@@ -79,15 +79,18 @@
 .pageHeader .mainInfos .bio {
    margin-top: 1rem;
 }
-.pageHeader .mainInfos .conexoesInfo {
+.pageHeader .mainInfos .conexoesInfos {
    display: flex;
    gap: 1rem;
    margin-top: 1rem;
 }
-.pageHeader .mainInfos .conexoesInfo span {
+.pageHeader .mainInfos .conexoesInfos .btnConexoes {
+   cursor: pointer;
+}
+.pageHeader .mainInfos .conexoesInfos .btnConexoes span {
    display: initial;
 }
-.pageHeader .mainInfos .conexoesInfo span:first-child {
+.pageHeader .mainInfos .conexoesInfos .btnConexoes span:first-child {
    font-weight: bold;
 }
 

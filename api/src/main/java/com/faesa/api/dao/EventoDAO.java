@@ -12,6 +12,21 @@ import com.faesa.api.model.Usuario;
 
 public class EventoDAO extends DAO
 {
+	private int gerarId(Connection con) throws Exception
+	{
+		String query = "SELECT ID_EVENTO_SEQ.NEXTVAL ID FROM DUAL";
+		
+		try(
+			PreparedStatement ps = con.prepareStatement(query);
+			ResultSet rs = ps.executeQuery();
+		) {
+			if(rs.next())
+				return rs.getInt("ID");
+		}
+		
+		return 0;
+	}
+	
 	private Evento criarEvento(ResultSet rs) throws Exception
 	{
 		Evento e = new Evento();
@@ -33,24 +48,29 @@ public class EventoDAO extends DAO
 		return e;
 	}
 	
-	public void insert(Evento e) throws Exception
+	public int insert(Evento e) throws Exception
 	{
 		String query =
 			"INSERT INTO EVENTO (ID, NOME, ID_USUARIO_CRIADOR, ID_ESPORTE, DESCRICAO, DT_EVENTO, LOCAL) " +
-			"VALUES (ID_EVENTO_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+			"VALUES (?, ?, ?, ?, ?, ?, ?)";
 		
 		try(
 			Connection con = OracleConnector.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
 		){
-			ps.setString(1, e.getNome());
-			ps.setInt(2, e.getIdUsuarioCriador());
-			ps.setInt(3, e.getIdEsporte());
-			ps.setString(4, e.getDescricao());
-			ps.setDate(5, this.getSqlDate(e.getDtEvento()));
-			ps.setString(6, e.getLocal());
+			int id = gerarId(con);
+			
+			ps.setInt(1, id);
+			ps.setString(2, e.getNome());
+			ps.setInt(3, e.getIdUsuarioCriador());
+			ps.setInt(4, e.getIdEsporte());
+			ps.setString(5, e.getDescricao());
+			ps.setDate(6, this.getSqlDate(e.getDtEvento()));
+			ps.setString(7, e.getLocal());
 			
 			ps.execute();
+			
+			return id;
 		}
 	}
 	

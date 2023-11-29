@@ -30,12 +30,13 @@ public class EventoController
 	
 	@PostMapping
 	@ResponseBody
-	public ResponseEntity<Void> post(
+	public ResponseEntity<Integer> post(
 		@RequestBody Evento evento
 	) {
 		try {
-			eventoService.create(evento);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(
+				eventoService.create(evento)
+			);
 		}
 		catch(Exception e) {
 			e.printStackTrace();
