@@ -25,9 +25,17 @@ export default function UsuarioPage()
    const [usuario, setUsuario] = useState<TUsuario>();
    const [eventos, setEventos] = useState<TEvento[]>([]);
 
+   function handleSeguir() {
+
+   }
+
+   function handlePararSeguir() {
+
+   }
+
    useEffect(() =>
    {
-      api.get(`/usuario/${params.idUsuario}`).then(resU =>
+      api.get(`/usuario/${params.idUsuario}`, configWithUser).then(resU =>
       {
          setUsuario(resU.data);
 
@@ -40,7 +48,7 @@ export default function UsuarioPage()
       <div className={styles.page}>
          <FixedTopbar>
             <span className={styles.fixedNome}>{ usuario?.nome }</span>
-            <span className={styles.fixedQtdEventos}>14 eventos</span>
+            <span className={styles.fixedQtdEventos}>{ eventos.length } eventos</span>
          </FixedTopbar>
 
          <div className={styles.pageHeader}>
@@ -59,10 +67,15 @@ export default function UsuarioPage()
                <div className={styles.foto}>
                   <FiUser />
                </div>
-               {user?.id === usuario?.id &&
-                  <div className={styles.underCapaBtns}>
-                     <button type="button">Editar perfil</button>
-                  </div>}
+               <div className={styles.underCapaBtns}>
+               {user?.id === usuario?.id
+                  ? <button type="button">Editar perfil</button>
+                  : (
+                     usuario?.sessionSeguindo
+                        ? <button type="button" onClick={handlePararSeguir}>Parar de seguir</button>
+                        : <button type="button" className={styles.btnSeguir} onClick={handleSeguir}>Seguir</button>
+                  )}
+               </div>
             </div>
             <div className={styles.mainInfos}>
                <div className={styles.topInfos}>
@@ -74,11 +87,11 @@ export default function UsuarioPage()
                </div>
                <div className={styles.conexoesInfo}>
                   <div>
-                     <span>204</span>
+                     <span>{ usuario?.qtdSeguindo! }</span>
                      <span>&nbsp;Seguindo</span>
                   </div>
                   <div>
-                     <span>127</span>
+                     <span>{ usuario?.qtdSeguidores! }</span>
                      <span>&nbsp;Seguidores</span>
                   </div>
                </div>

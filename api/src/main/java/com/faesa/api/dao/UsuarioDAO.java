@@ -54,26 +54,35 @@ public class UsuarioDAO extends DAO
 		}
 	}
 	
-	public Usuario select(int id) throws Exception
+	public Usuario select(int id, int idSession) throws Exception
 	{
 		String query =
 			"SELECT " +
 			"	 U.* " +
-			//"	,COUNT(SEGUIDOR.ID) AS QTD_SEGUIDORES " +
-			//"	,COUNT(SEGUINDO.ID) AS QTD_SEGUINDO " +
+			"	,( " +
+			"		SELECT COUNT(*) FROM CONEXAO_USUARIOS SEGUIDOR " +
+			"		WHERE SEGUIDOR.ID_SEGUIDO = U.ID " +
+			"	) AS QTD_SEGUIDORES " +
+			"	,(" +
+			"		SELECT COUNT(*) FROM CONEXAO_USUARIOS SEGUIDO " +
+			"		WHERE SEGUIDO.ID_SEGUIDOR = U.ID " +
+			"	) AS QTD_SEGUINDO " +
+			"	,CASE " +
+			"		WHEN SESSION_SEGUINDO.ID IS NOT NULL THEN 'TRUE' " +
+			"		ELSE 'FALSE' " +
+			"	END AS SESSION_SEGUINDO " +
 			"FROM USUARIO U " +
-			//"LEFT JOIN CONEXAO_USUARIOS SEGUIDOR ON " +
-			//"	SEGUIDOR.ID_SEGUIDOR = U.ID " +
-			//"LEFT JOIN CONEXAO_USUARIOS SEGUINDO ON " +
-			//"	SEGUINDO.ID_SEGUIDO = U.ID " +
-			"WHERE U.ID = ? "; // +
-			//"GROUP BY U.ID";
+			"LEFT JOIN CONEXAO_USUARIOS SESSION_SEGUINDO ON " +
+			"	SESSION_SEGUINDO.ID_SEGUIDOR = ? AND " +
+			"	SESSION_SEGUINDO.ID_SEGUIDO = U.ID " +
+			"WHERE U.ID = ?";
 		
 		try(
 			Connection con = OracleConnector.getConnection();
 			PreparedStatement ps = con.prepareStatement(query);
 		){
-			ps.setInt(1, id);
+			ps.setInt(1, idSession);
+			ps.setInt(2, id);
 			
 			ResultSet rs = ps.executeQuery();
 			
@@ -87,8 +96,9 @@ public class UsuarioDAO extends DAO
 				u.setBio(rs.getString("BIO"));
 				u.setDtInsert(this.getDate(rs, "DT_INSERT"));
 				
-				//u.setQtdSeguidores(rs.getInt("QTD_SEGUIDORES"));
-				//u.setQtdSeguindo(rs.getInt("QTD_SEGUINDO"));
+				u.setQtdSeguidores(rs.getInt("QTD_SEGUIDORES"));
+				u.setQtdSeguindo(rs.getInt("QTD_SEGUINDO"));
+				u.setSessionSeguindo(rs.getBoolean("SESSION_SEGUINDO"));
 				
 				return u;
 			}

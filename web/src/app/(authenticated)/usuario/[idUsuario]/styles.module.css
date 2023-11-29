@@ -2,7 +2,7 @@
    /* --height-barraFixa: 2.8rem; */
    --color-pageHeader-a: var(--color-main-a);
 
-   position: relative;
+   /* position: relative; */
 }
 
 .fixedNome {
@@ -48,6 +48,10 @@
    margin-top: calc(var(--size-foto) / 2 + 1rem);
    padding: 0.6rem 1rem;
    border-radius: 99rem;
+}
+.pageHeader .underCapa .underCapaBtns .btnSeguir {
+   color: green;
+   font-weight: bold;
 }
 .pageHeader .underCapa .foto {
    display: flex;

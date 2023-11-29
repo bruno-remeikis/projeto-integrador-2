@@ -24,8 +24,13 @@ export const Modal = ({ isOpen, setIsOpen, title, titleStyle, width, minWidth, m
          className={`${styles.overlay} ${className}`}
          style={{ display: isOpen ? 'flex' : 'none', ...style }}
          {...props}
+         onClick={() => setIsOpen(false)}
       >
-         <div className={styles.containerColumn} style={{ width, minWidth, maxWidth }}>
+         <div
+            className={styles.containerColumn}
+            style={{ width, minWidth, maxWidth }}
+            onClick={e => e.stopPropagation()}
+         >
             <div className={styles.container} style={style}>
 
                <div className={styles.header}>

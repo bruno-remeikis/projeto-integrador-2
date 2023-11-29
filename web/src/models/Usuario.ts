@@ -7,4 +7,8 @@ export type TUsuario =
    foto?: any;
    fotoCapa?: any;
    dtInsert?: Date;
+
+   qtdSeguidores?: number;
+   qtdSeguindo?: number;
+   sessionSeguindo?: boolean;
 }

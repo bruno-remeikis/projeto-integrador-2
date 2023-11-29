@@ -19,8 +19,8 @@ public class UsuarioService
 		return new UsuarioDAO().insert(u);
 	}
 	
-	public Usuario find(int id) throws Exception
+	public Usuario find(int id, int idSession) throws Exception
 	{
-		return new UsuarioDAO().select(id);
+		return new UsuarioDAO().select(id, idSession);
 	}
 }

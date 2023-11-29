@@ -22,4 +22,5 @@ public class Usuario
 	
 	private Integer qtdSeguidores;
 	private Integer qtdSeguindo;
+	private Boolean sessionSeguindo;
 }
