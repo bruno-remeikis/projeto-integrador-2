@@ -34,4 +34,10 @@ public class EventoService
 	{
 		return new EventoDAO().selectByIdUsuarioFeed(idUsuario);
 	}
+	
+	public void delete(int id) throws Exception
+	{
+		new PresencaEventoService().deleteByEvento(id);
+		new EventoDAO().delete(id);
+	}
 }

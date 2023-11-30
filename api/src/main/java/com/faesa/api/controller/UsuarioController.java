@@ -1,5 +1,7 @@
 package com.faesa.api.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -78,6 +80,22 @@ public class UsuarioController
 		try {
 			return new ResponseEntity<Usuario>(
 				usuarioService.find(id, idSession),
+				HttpStatus.OK
+			);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+	
+	@GetMapping("/pesquisar")
+	public ResponseEntity<List<Usuario>> get(
+		String pesquisa
+	) {
+		try {
+			return new ResponseEntity<List<Usuario>>(
+				usuarioService.search(pesquisa),
 				HttpStatus.OK
 			);
 		}

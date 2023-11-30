@@ -8,7 +8,7 @@ import Link from 'next/link';
 import '../globals.css';
 import styles from './layout.module.css';
 // Icons
-import { AiOutlineHome, AiOutlineUser } from 'react-icons/ai'
+import { AiOutlineHome, AiOutlineSearch, AiOutlineUser } from 'react-icons/ai'
 import { BsBookmark, BsDoorOpen } from 'react-icons/bs';
 // Components
 import HomeMap from '@/components/HomeMap/HomeMap';
@@ -26,6 +26,7 @@ import { user } from '@/services/UserService';
 import { EventosProvider, useEventos } from '@/context/EventosContext';
 import { CounterProvider, useCounter } from '@/context/Counter';
 import { MeusEventos } from './MeusEventos';
+import { FiSearch } from 'react-icons/fi';
 //import { Evento2 } from '../../components/Evento2';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -80,14 +81,19 @@ export default function AuthenticatedLayout({
 									<span>Seu perfil</span>
 								</Link></li>
 
-								<li><Link href='/'>
+								{/*<li><Link href='/'>
 									<BsBookmark />
 									<span>Eventos Salvos</span>
+								</Link></li>*/}
+
+								<li><Link href="/pesquisar">
+									<AiOutlineSearch />
+									<span>Pesquisar</span>
 								</Link></li>
 							</ul>
 
 							<div className={styles.personalData}>
-								<span>{ user?.nome }</span>
+								<Link href={`/usuario/${user?.id}`}>{ user?.nome }</Link>
 								<button type="button" onClick={handleLogout} title="Sair">
 									<BsDoorOpen />
 								</button>

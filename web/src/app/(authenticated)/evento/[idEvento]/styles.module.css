@@ -26,10 +26,10 @@
    padding: 1rem;
    border-bottom: var(--border-simple);
 }
-.header .top {
+.header .horizontal {
    display: flex;
 }
-.header .top :first-child {
+.header .horizontal > :first-child {
    flex-grow: 1;
 }
 .header h3 {
@@ -42,6 +42,22 @@
 }
 .header .data svg {
    font-size: 1.2rem;
+}
+.header .cancelarEvento button {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   
+   /* background-color: transparent; */
+   background-color: rgb(255, 74, 74);
+   width: 2rem;
+   height: 2rem;
+   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+   border-radius: 99rem;
+}
+.header .cancelarEvento button svg {
+   font-size: 1.2rem;
+   color: rgb(150, 0, 0);
 }
 
 .body {

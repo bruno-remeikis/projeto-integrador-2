@@ -109,4 +109,20 @@ public class PresencaEventoDAO extends DAO
 			}
 		}
 	}
+	
+	public void deleteByEvento(int idEvento) throws Exception
+	{
+		String query =
+			"DELETE FROM PRESENCA_EVENTO WHERE ID_EVENTO = ?";
+		
+		try(
+			Connection con = OracleConnector.getConnection();
+			PreparedStatement ps = con.prepareStatement(query);
+		) {
+			
+			ps.setInt(1, idEvento);
+			
+			ps.execute();
+		}
+	}
 }

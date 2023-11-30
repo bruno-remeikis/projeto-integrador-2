@@ -26,6 +26,7 @@ export default function UsuarioPage()
    const { addEventoFeed, removerEventoFeed, addMeuEvento, removerMeuEvento } = useEventos();
 
    const [usuario, setUsuario] = useState<TUsuario>();
+   const primeiroNome = usuario?.nome ? firstWordOf(usuario.nome) : '';
 
    const [modalSeguindoIsOpen, setModalSeguindoIsOpen] = useState<boolean>(false);
    const [modalSeguidoresIsOpen, setModalSeguidoresIsOpen] = useState<boolean>(false);
@@ -98,14 +99,14 @@ export default function UsuarioPage()
          isOpen={modalSeguindoIsOpen}
          setIsOpen={setModalSeguindoIsOpen}
          usuarios={seguindo}
-         title={`Seguidos por ${firstWordOf(usuario?.nome)}`}
+         title={`Seguidos por ${primeiroNome}`}
       />
 
       <ModalUsuarios
          isOpen={modalSeguidoresIsOpen}
          setIsOpen={setModalSeguidoresIsOpen}
          usuarios={seguidores}
-         title={`Seguidores de ${firstWordOf(usuario?.nome)}`}
+         title={`Seguidores de ${primeiroNome}`}
       />
 
       <div className={styles.page}>
@@ -190,7 +191,13 @@ export default function UsuarioPage()
             ) : (
                // Sem eventos
                <div className={styles.noEvents}>
-                  <span>Você ainda não criou nenhum evento.</span>
+                  <span>{ (!usuario
+                     ? ''
+                     : (usuario?.id === user?.id
+                        ? 'Você'
+                        : primeiroNome)
+                     + ' ainda não criou nenhum evento.'
+                  )}</span>
                   <Link className={styles.btnNovoEvento} href='/'>Voltar ao Feed</Link>
                </div>
             )}

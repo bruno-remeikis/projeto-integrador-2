@@ -1,15 +1,11 @@
 'use client';
 
 import { FiSearch } from 'react-icons/fi';
-import { AiOutlineHome, AiOutlineEnvironment, AiOutlineHeart, AiFillHeart, AiOutlineCarryOut, AiOutlineMessage, AiOutlineStar, AiOutlineShareAlt } from 'react-icons/ai';
 
 import { TEvento } from '@/models/Evento';
 
 import styles from './page.module.css';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import Evento from '@/components/Evento';
-import { CardUsuario } from '@/components/CardUsuario';
 import { api } from '@/services/api';
 import { useEffect, useState } from 'react';
 import { user } from '@/services/UserService';
@@ -23,12 +19,15 @@ export default function HomePage()
    const [feedPesquisa, setFeedPesquisa] = useState<TEvento[]>(feed);
 
    useEffect(() => {
-      api.get(`/evento/feed/${user?.id}`).then(res =>
-      {
-         setFeed(res.data);
-         setFeedPesquisa(res.data);
-      });
+      api.get(`/evento/feed/${user?.id}`)
+         .then(res =>  setFeed(res.data));
    }, []);
+
+   useEffect(() =>
+   {
+      setFeedPesquisa(feed);
+   },
+   [feed]);
 
    function handlePesquisa(pesquisa: string)
    {
@@ -52,12 +51,9 @@ export default function HomePage()
    return (
       <div className={styles.searchContainer}>
          <div className={styles.searchTop}>
-            {/*<Link href="/" className={styles.homeBtn}>
-               <AiOutlineHome />
-            </Link>*/}
-            <div className={styles.search}>
+            <div className="search">
                <input type="text"
-                  placeholder="Pesquise por eventos ou usuários"
+                  placeholder="Nome do evento, esporte, local ou usuário"
                   onChange={e => handlePesquisa(e.target.value)}
                />
                <button type="button" onClick={e => handlePesquisa(pesquisa)}>

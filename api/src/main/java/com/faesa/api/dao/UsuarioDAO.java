@@ -3,6 +3,8 @@ package com.faesa.api.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.faesa.api.connection.OracleConnector;
 import com.faesa.api.model.Usuario;
@@ -104,6 +106,38 @@ public class UsuarioDAO extends DAO
 			}
 			
 			return null;
+		}
+	}
+	
+	public List<Usuario> selectByName(String pesquisa) throws Exception
+	{
+		String query =
+			"SELECT * FROM USUARIO WHERE UPPER(NOME) LIKE '%' || UPPER(?) || '%'";
+		
+		try(
+			Connection con = OracleConnector.getConnection();
+			PreparedStatement ps = con.prepareStatement(query);
+		){
+			ps.setString(1, pesquisa);
+			
+			try(ResultSet rs = ps.executeQuery())
+			{
+				List<Usuario> usuarios = new ArrayList<Usuario>();
+				
+				while(rs.next())
+				{
+					Usuario u = new Usuario();
+					
+					u.setId(rs.getInt("ID"));
+					u.setNome(rs.getString("NOME"));
+					u.setEmail(rs.getString("EMAIL"));
+					//u.setSessionSeguindo(rs.getBoolean("SESSION_SEGUINDO"));
+					
+					usuarios.add(u);
+				}
+			
+				return usuarios;
+			}
 		}
 	}
 }

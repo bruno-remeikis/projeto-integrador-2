@@ -1,5 +1,7 @@
 package com.faesa.api.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.faesa.api.dao.UsuarioDAO;
@@ -22,5 +24,10 @@ public class UsuarioService
 	public Usuario find(int id, int idSession) throws Exception
 	{
 		return new UsuarioDAO().select(id, idSession);
+	}
+	
+	public List<Usuario> search(String pesquisa) throws Exception
+	{
+		return new UsuarioDAO().selectByName(pesquisa);
 	}
 }

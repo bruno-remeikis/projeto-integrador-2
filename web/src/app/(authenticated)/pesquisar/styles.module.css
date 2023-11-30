@@ -1,0 +1,46 @@
+.page {
+   /* padding: 1rem; */
+}
+
+.search {
+   padding: 1rem;
+}
+
+.usuario {
+   display: flex;
+   padding: 0.4rem 1rem;
+   align-items: center;
+   cursor: pointer;
+   transition: background-color 0.1s;
+}
+.usuario:hover {
+   /* background-color: var(--color-dark-platform); */
+   background-color: rgba(255, 255, 255, 0.8);
+}
+/* .usuario:not(:first-child) {
+   border-top: 1px solid rgba(0, 0, 0, 0.1);
+} */
+.usuario .img {
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+   background-color: var(--color-dark-platform);
+   width: 2.6rem;
+   height: 2.6rem;
+   border-radius: 99rem;
+   box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.2);
+   /* border: 1px solid rgba(0, 0, 0, 0.1); */
+}
+.usuario .img svg {
+   font-size: 1.6rem;
+}
+.usuario .nome {
+   margin-left: 0.8rem;
+   font-size: 1.1rem;
+}
+
+.nenhum {
+   text-align: center;
+   padding: 0.4rem 0;
+}

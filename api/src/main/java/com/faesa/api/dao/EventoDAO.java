@@ -243,4 +243,19 @@ public class EventoDAO extends DAO
 			return eventos;
 		}
 	}
+	
+	public void delete(int id) throws Exception
+	{
+		String query =
+			"DELETE FROM EVENTO WHERE ID = ?";
+		
+		try(
+			Connection con = OracleConnector.getConnection();
+			PreparedStatement ps = con.prepareStatement(query)
+		) {
+			ps.setInt(1, id);
+			
+			ps.execute();
+		}
+	}
 }

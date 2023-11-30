@@ -34,4 +34,9 @@ public class PresencaEventoService
 	{
 		return new PresencaEventoDAO().selectParticipantes(idEvento);
 	}
+	
+	public void deleteByEvento(int idEvento) throws Exception
+	{
+		new PresencaEventoDAO().deleteByEvento(idEvento);
+	}
 }
